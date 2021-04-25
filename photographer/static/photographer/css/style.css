@@ -1,0 +1,149 @@
+
+
+/*>>>>>>>  HEAD  <<<<<<<*/
+*{
+    font-weight: normal;
+}
+b{
+    font-weight: 700;
+}
+html, html a {
+    /*text-shadow: 1px 1px 1px rgba(0,0,0,0.004);*/
+     text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+
+}
+#title{
+    letter-spacing: 2px;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+.head{    
+    padding: 2px;   
+    justify-content: center;
+    background-color: #F8F9F9;  
+}
+.head h3{
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 15px;
+}
+.head a{
+    text-decoration: none;
+    color: black;
+}
+nav{    
+    display: flex;
+    flex-direction: row;      
+    padding: 0;
+    justify-content: center;
+    margin-left: 0;
+}
+nav a{
+    margin: 25px 35px;    
+    text-decoration: none;
+    color: black;    
+    font-family: 'Source Serif Pro', serif;
+    font-size: 17px;     
+}
+#nav-active{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 25px 33px;     
+}
+footer{
+    margin: auto;
+    width: 1000px;
+}
+
+
+/*>>>>>  START  <<<<<<<<*/
+.photo-container {
+	margin: auto;
+    display: flex;
+    width: 1000px;
+    justify-content: space-around;                   
+}
+.photo-column {
+    display: flex;
+    flex-direction: column;
+    width: 320px;    
+    margin: 5px;
+}
+.photo-column img{
+    width: 315px;
+    margin: 5px 0;
+}
+
+/*>>>>>>>> PORTRETY <<<<<<<<<*/
+
+.portrait-column{
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+    margin: 0.5%;
+}
+.portrait-column img{
+    max-width: 100%;
+    margin: 1% 0;    
+}
+
+/*>>>>>>>>> Okolicznosciowe <<<<<<<<<<*/
+.four-photos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.four-photos img{
+    height: 250px;
+    margin: 0.5%;
+}
+/*nav span{  --------- filtr---------
+    margin: 15px;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+}*/
+nav.pres a{ 
+    margin: 15px;
+    
+    font-family: 'Lora', serif;
+    font-weight: 500;
+}
+
+/*>>>>>>>>>>>> Rodzinne <<<<<<<<<<*/
+
+.photo-4columns{
+    display: flex;
+    flex-direction: column;
+    width: 24.5%;
+}  
+.photo-4columns img{
+    width: 98%;
+    margin: 2% 0;
+    border-radius: 5px;
+}
+
+/*>>>>>>>>>>> Sensualne <<<<<<<<<<<*/
+.sens img{
+    width: 100%;
+    margin: 0.3% 0;
+}
+
+
+/*>>>>>>>>>>> Wiecej <<<<<<<<<<<*/
+
+
+/*>>>>>>>>>> Kontakt <<<<<<<<<<<*/
+.kontakt-container{
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.localization{
+    width: 1000px;
+    font-family: 'Lora', serif; 
+    text-align: center;    
+}
+.localization img{
+    margin: 0 1%;
+}

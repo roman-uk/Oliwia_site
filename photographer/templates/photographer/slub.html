@@ -1,0 +1,43 @@
+{% extends "./index.html" %}
+{% load static %}
+
+{%block okolicznościowe%}nav-active{%endblock%}
+
+{% block content %}
+<head>
+	<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
+	
+</head>
+
+<body>
+	<div style="text-align: center"><h2 style="font-family: 'Lora', serif;">Okolicznościowe</h2></div>
+<div style="width: 1000px; margin: auto;">
+	<h3 style="font-family: 'New Tegomin', serif; text-align: center">Lorem Ipsum</h3>
+	<p style="font-family: 'New Tegomin', serif;">
+		Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
+	</p>
+
+<div>
+	<nav class="pres">
+		<a href="{%url 'wieczor_page' %}">Wieczór panienski</a>
+		<a href="{% url 'chrzest_page' %}">Chrzest</a>
+		<a href="{% url 'slub_page' %}"><b>Ślub cywilny</b></a>
+		<a href="{% url 'okolicznosciowe_page' %}">wszystkie</a>
+	</nav>	
+</div>
+
+<div class="photo-container">
+	
+	<div class="four-photos">		
+		<img src="media/okolicznosciowe/functions-events-and.jpg">
+		<img src="media/okolicznosciowe/fun-wedding-photos_0113-750x536.jpg">
+		<img src="media/okolicznosciowe/images.jpeg">
+		<img src="media/okolicznosciowe/images2.jpeg">
+		<img src="media/okolicznosciowe/images (1).jpeg">		
+	</div>
+
+
+</div>
+
+{% endblock %}
