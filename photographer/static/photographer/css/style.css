@@ -11,7 +11,12 @@ html, html a {
     /*text-shadow: 1px 1px 1px rgba(0,0,0,0.004);*/
      text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
-
+}
+body{    
+    background-attachment: fixed; 
+    background-size:  100%;
+    background-repeat: no-repeat;    
+    background-image: url('../images/canva-photo-editor.png');    
 }
 #title{
     letter-spacing: 2px;
@@ -36,10 +41,10 @@ nav{
     flex-direction: row;      
     padding: 0;
     justify-content: center;
-    margin-left: 0;
+    
 }
 nav a{
-    margin: 25px 35px;    
+    margin: 25px 17px;    
     text-decoration: none;
     color: black;    
     font-family: 'Source Serif Pro', serif;
@@ -53,6 +58,23 @@ nav a{
 footer{
     margin: auto;
     width: 1000px;
+    font-size: 14px;
+}
+.face-inst{
+    margin: auto;
+    display: flex;
+    position: fixed;
+    
+    background-color: #ffffff;
+    height: 100px; 
+    opacity: 0.7;
+    width: 100%;
+    justify-content: center;
+    align-items: center;    
+    bottom: 0;
+}
+.face-inst a{
+    margin: 10px;
 }
 
 
@@ -61,42 +83,24 @@ footer{
 	margin: auto;
     display: flex;
     width: 1000px;
-    justify-content: space-around;                   
+    justify-content: space-between;                   
 }
 .photo-column {
     display: flex;
     flex-direction: column;
-    width: 320px;    
-    margin: 5px;
+    width: 328px;  
 }
 .photo-column img{
-    width: 315px;
-    margin: 5px 0;
+    width: 100%;
+    margin: 3px 0;
 }
 
 /*>>>>>>>> PORTRETY <<<<<<<<<*/
 
-.portrait-column{
-    display: flex;
-    flex-direction: column;
-    width: 49%;
-    margin: 0.5%;
-}
-.portrait-column img{
-    max-width: 100%;
-    margin: 1% 0;    
-}
+
 
 /*>>>>>>>>> Okolicznosciowe <<<<<<<<<<*/
-.four-photos{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.four-photos img{
-    height: 250px;
-    margin: 0.5%;
-}
+
 /*nav span{  --------- filtr---------
     margin: 15px;
     cursor: pointer;
@@ -111,25 +115,50 @@ nav.pres a{
 
 /*>>>>>>>>>>>> Rodzinne <<<<<<<<<<*/
 
-.photo-4columns{
-    display: flex;
-    flex-direction: column;
-    width: 24.5%;
-}  
-.photo-4columns img{
-    width: 98%;
-    margin: 2% 0;
-    border-radius: 5px;
-}
+
 
 /*>>>>>>>>>>> Sensualne <<<<<<<<<<<*/
-.sens img{
-    width: 100%;
-    margin: 0.3% 0;
-}
+
 
 
 /*>>>>>>>>>>> Wiecej <<<<<<<<<<<*/
+
+
+
+/*>>>>>>>>>>>>Blog<<<<<<<<<<<<<<<<<<*/
+.blog-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 1000px;                       
+}
+.blog-entry{
+    background-color: #EAF2F8 ;
+    max-width: 100%;
+    position: relative;
+    margin-bottom: 7px;
+    padding: 8px;
+    border-radius: 4px;
+}
+.blog-entry img{ 
+    max-width: 100%;    
+    float: left;
+    margin: 0 10px 7px 0px;
+    /*margin-bottom: 0;*/
+    border-radius: 5px;
+}
+.blog-entry-title{    
+    text-align: center;
+    position: relative;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 5px 0;
+       
+}
+.blog-text{    
+    margin-left: 8px;
+    margin-top: 0;     
+}
 
 
 /*>>>>>>>>>> Kontakt <<<<<<<<<<<*/
@@ -138,6 +167,30 @@ nav.pres a{
     margin: auto;
     display: flex;
     flex-direction: column;
+}
+.oliwia{    
+    max-width: 100%;
+    position: relative;
+    margin-bottom: 7px;
+    padding: 8px;
+    border-radius: 4px;
+}
+.oliwia img{
+        
+    float: left;
+    margin: 0 10px 7px 0px;    
+    border-radius: 50%;
+}
+.oliwia-title{
+    text-align: center;
+    position: relative;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 5px 0;
+}
+.oliwia-text{
+    margin-left: 8px;
+    margin-top: 0;
 }
 .localization{
     width: 1000px;

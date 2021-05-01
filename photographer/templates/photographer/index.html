@@ -4,9 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>Oliwia Brzykcy</title>
-   <!--  <link rel="stylesheet" type="text/css" href="{% static 'photographer/css/reset.css' %}"> -->
+   
     <link rel="stylesheet" href="{% static 'photographer/css/style.css'%}">  
-
     <link rel="preconnect" href="https://fonts.gstatic.com"> 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">  
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -15,6 +14,7 @@
 </head>
 <body>
 <div class="head">
+
 		<div style="text-align: center">
 			
             <h1 id="title"><a href="{% url 'start_page' %}">OLIWIA BRZYKCY</a></h1>
@@ -24,22 +24,29 @@
 		</div>
 			
 			<nav>
-				<a id="{%block portrety%}{%endblock%}" href="{%url 'portrety_page' %}">Portrety</a>
+				<a style="margin-left: 0" id="{%block portrety%}{%endblock%}" href="{%url 'portrety_page' %}">Portrety, wizerunkowe</a>
 				<a id="{%block okolicznościowe%}{%endblock%}" href="{% url 'okolicznosciowe_page' %}">Okolicznościowe</a>
 				<a id="{%block rodzinne%}{%endblock%}" href="{% url 'rodzinne_page' %}">Ciążowe, dziecięce, rodzinne</a>
 				<a id="{%block sensualne%}{%endblock%}" href="{% url 'sensualne_page' %}">Sensualne</a>
 				<a id="{%block wiecej%}{%endblock%}" href="{% url 'wiecej_page' %}">Więcej prac</a>
+				<a id="{%block blog%}{%endblock%}" href="{% url 'blog_page' %}">Blog</a>
 				<a id="{%block kontakt%}{%endblock%}" href="{% url 'kontakt_page' %}">Kontakt</a>			
-			</nav>		
+			</nav>	
+
 </div>
 
     {% block content %}
     {% endblock %}
-
-
-		<footer>
-            <h5>made by roman-uk <strong> | </strong> <span> mail:  roman55@mail.com</span></h5>
-        </footer>
+  
+			
+	  	<div class="face-inst">
+			<a href="https://www.facebook.com/fotooliwiabrzykcy/" target="_blank"><img src="{% static 'photographer/images/face-footer.jpg' %}"></a>
+			<a href="https://www.instagram.com/fotooliwiabrzykcy/" target="_blank"><img src="{% static 'photographer/images/insag-footer.webp'%}"></a>
+		</div>	
+			
+	<footer>
+        <b>made by roman-uk <strong> | </strong> <span> mail:  roman55@mail.com</span></b>
+    </footer>
 
 
 </body>

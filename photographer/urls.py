@@ -9,9 +9,13 @@ urlpatterns = [
 	path('rodzinne', views.family, name='rodzinne_page'),
 	path('sensualne', views.sensuous, name='sensualne_page'),
 	path('wiecej', views.more, name='wiecej_page'),
+	path('blog', views.blog, name='blog_page'),
 	path('kontakt', views.contact, name='kontakt_page'),
 
 	path('wieczor', views.wieczor, name='wieczor_page'),
 	path('chrzest', views.chrzest, name='chrzest_page'),
-	path('slub', views.slub, name='slub_page')	
+	path('slub', views.slub, name='slub_page'),
+	path('ciazowe', views.ciazowe, name='ciazowe_page'),
+	path('dzieciece', views.dzieciece, name='dzieciece_page'),
+	path('rodzine', views.rodzine, name='rodzine_page')		
 ]

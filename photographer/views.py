@@ -38,6 +38,12 @@ def more(request):
 
 
 # >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
+def blog(request):
+	context = {}
+	return render(request, 'photographer/blog.html', context)
+
+
+# >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
 def contact(request):
 	context = {}
 	return render(request, 'photographer/kontakt.html', context)
@@ -56,3 +62,15 @@ def chrzest(request):
 def slub(request):
 	context = {}
 	return render(request, 'photographer/slub.html', context)
+
+def ciazowe(request):
+	context = {}
+	return render(request, 'photographer/ciazowe.html', context)
+
+def dzieciece(request):
+	context = {}
+	return render(request, 'photographer/dzieciece.html', context)
+
+def rodzine(request):
+	context = {}
+	return render(request, 'photographer/rodzine.html', context)
