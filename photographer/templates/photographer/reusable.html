@@ -1,3 +1,7 @@
+<!-- reusable
+This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziecięce, rodzinne", "sensualne", "Więcej" 
+-->
+
 {% extends "./index.html" %}
 {% load static %}
 
@@ -6,12 +10,21 @@
 {% block content %}
 
 <body>	
-	<div style="text-align: center"><h2>Sesje portretowe i wizerunkowe</h2></div>
-<div style="width: 1000px; margin: auto;">
-	<h3 style="text-align: center">Branches in a Nutshell</h3>
+	<div class="main-column">
+	<h2>Sesje portretowe i wizerunkowe</h2>
+
+	<h3>Branches in a Nutshell</h3>
 	<p>
 		A branch in Git is simply a lightweight movable pointer to one of these commits. The default branch name in Git is master. As you start making commits, you’re given a master branch that points to the last commit you made. Every time you commit, the master branch pointer moves forward automatically.
 	</p>
+		<div>		
+		<nav class="filter">
+			<a href="#">Wieczór panienski</a>
+			<a href="#">Chrzest</a>
+			<a href="#">Ślub cywilny</a>
+			<a href="#">wszystkie</a>
+		</nav>
+	</div>
 	<div class="photo-container">
 		
 		<div class="photo-column">		
@@ -34,6 +47,8 @@
 		</div>	
 				
 	</div>
+
 </div>
+</body>
 
 {% endblock %}

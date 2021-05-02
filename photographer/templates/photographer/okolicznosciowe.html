@@ -5,27 +5,19 @@
 
 {% block content %}
 <head>
-	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 
-	<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
-	
+	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 	
 </head>
 
 <body>
-	<div style="text-align: center"><h2 style="font-family: 'Lora', serif;">Okolicznościowe</h2></div>
+	<div style="text-align: center"><h2>Okolicznościowe</h2></div>
 <div style="width: 1000px; margin: auto;">
-	<h3 style="font-family: 'New Tegomin', serif; text-align: center">Lorem Ipsum</h3>
-	<p style="font-family: 'New Tegomin', serif;">
+	<h3 style="text-align: center">Lorem Ipsum</h3>
+	<p>
 		Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
 	</p>
 
-	<div>
-		<!-- <nav>  -------- filt ---------
-			<span href="{%url 'portrety_page' %}">Wieczór panienski</span>
-			<span>Chrzest</span>
-			<span>Ślub cywilny</span>
-		</nav> -->
-		<nav class="pres">
+	<div>		
+		<nav class="filter">
 			<a href="{%url 'wieczor_page' %}">Wieczór panienski</a>
 			<a href="{% url 'chrzest_page' %}">Chrzest</a>
 			<a href="{% url 'slub_page' %}">Ślub cywilny</a>
