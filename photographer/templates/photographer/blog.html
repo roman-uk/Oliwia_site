@@ -4,8 +4,49 @@
 {%block blog%}nav-active{%endblock%}
 
 {% block content %}
+<head>
+	<style type="text/css">
+		#{{navbar_active}} {
+			font-weight: bold;
+    		font-size: 20px;
+    		margin: 25px 33px;
+		}
+	</style>
+</head>
 
 <body>
+	<div class="main-column">
+
+		
+	<h2>{{full_name_tab}}</h2>
+	{% for item in description %}
+		<h3>{{item.title}}</h3>
+	<span id="description_content">
+		{{item.content}}
+	</span>
+	{% endfor %}
+	<div>		
+		<nav class="filter">
+			{% for item in photo_themes %}
+				<a href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>
+			{% endfor %}
+		</nav>
+	</div>	
+		<div class="photo-container">
+			{% for col in columns %}
+				<div class="photo-column">
+				{% for item in photos %}				
+					{% if item.column == col %}
+						<img src="{{item.photo.url}}">						
+					{% endif %}				
+				{% endfor %}
+				</div>
+			{% endfor %}	
+		</div>	
+				
+	</div>
+
+</div>
 	<div style="text-align: center"><h2>Blog</h2></div>
 <div style="width: 1000px; margin: auto;">
 	<h3 style="text-align: center">Lorem Ipsum</h3>

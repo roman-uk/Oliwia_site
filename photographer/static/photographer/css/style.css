@@ -14,115 +14,18 @@ html, html a {
      text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
 }
+
+#description_content{
+    margin: 0 5px 10px 5px;
+    text-align: left;
+    text-indent: 1em;
+}
 #title{
     letter-spacing: 2px;    
     margin-bottom: 10px;
 }
-.head{    
-    padding: 2px;   
-    justify-content: center;
-    background-color: #F8F9F9;  
-}
-.head h3{    
-    font-size: 15px;
-}
-.head a{
-    text-decoration: none;
-    color: black;
-}
-nav{    
-    display: flex;
-    flex-direction: row;      
-    padding: 0;
-    justify-content: center;
-    align-items: center;     
-}
-nav a{
-    margin: 25px 14px;    
-    text-decoration: none;
-    color: black;    
-    font-size: 16px;     
-}
-#nav-active{
-    font-weight: bold;
-    font-size: 20px;
-    margin: 25px 33px;     
-}
-footer{
-    margin: auto;
-    margin-top: 20px;
-    width: 1000px;
-    font-size: 14px;
-}
-.face-inst{
-    margin: auto;
-    display: flex;
-    position: fixed;
-    
-    background-color: #ffffff;
-    height: 80px; 
-    opacity: 0.7;
-    width: 100%;
-    justify-content: center;
-    align-items: center;    
-    bottom: 0;
-}
-.face-inst a{
-    margin: 10px;
-}
 
-/*>>>>>>>>>> REUSABLE <<<<<<<<<<<<<<
-(start, portrety, okolicznosciowe, rodzinne, sensualne, wiecej)*/
-.main-column{
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    width: 1000px;    
-    text-align: center;
-}
-.photo-container {
-	margin: auto;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;                   
-}
-.photo-column {
-    display: flex;
-    flex-direction: column;
-    width: 328px;  
-}
-.photo-column img{    
-    margin: 3px 0;
-}
-.filter{
-    flex-wrap: wrap;
-    background-color: #F8F9F9;
-}
-nav.filter a{ 
-    margin: 20px 8px;    
-    font-weight: 500;
-    padding: 2px 4px;
-    background-color: white;
-    border-radius: 5px;
-}
-
-/*>>>>>>>> PORTRETY <<<<<<<<<*/
-
-
-
-/*>>>>>>>>> Okolicznosciowe <<<<<<<<<<*/
-
-/*nav span{  --------- filtr---------
-    margin: 15px;
-    cursor: pointer;
-    font-family: 'Lora', serif;
-}*/
-/*nav.pres a{ 
-    margin: 15px;    
-    font-weight: 500;
-}*/
-
-/*>>>>>>>>>>>>Blog<<<<<<<<<<<<<<<<<<*/
+/*             B            */
 .blog-container {
     margin: auto;
     display: flex;
@@ -156,14 +59,98 @@ nav.filter a{
     margin-top: 0;     
 }
 
+/*       F           */
+.face-inst{
+    margin: auto;
+    display: flex;
+    position: fixed;    
+    background-color: #ffffff;
+    height: 80px; 
+    opacity: 0.7;
+    width: 100%;
+    justify-content: center;
+    align-items: center;    
+    bottom: 0;
+}
+.face-inst a{
+    margin: 10px;
+}
+.filter{
+    border-top: 2px solid #FF00FF;
+    flex-wrap: wrap;
+    background-color: #F8F9F9;
+}
+footer{
+    margin: auto;
+    margin-top: 20px;
+    width: 1000px;
+    font-size: 14px;
+}
+nav.filter a{ 
+    margin: 20px 8px;    
+    font-weight: 500;
+    padding: 2px 4px;
+    background-color: white;
+    border-radius: 5px;
+}
 
-/*>>>>>>>>>> Kontakt <<<<<<<<<<<*/
+/*       H           */
+.head{    
+    padding: 2px; 
+    border-top: 2px solid #FF00FF;  
+    justify-content: center;
+    background-color: #F8F9F9;  
+}
+.head h3{    
+    font-size: 15px;
+}
+.head a{
+    text-decoration: none;
+    color: black;
+}
+
+/*        K              */
 .kontakt-container{
     width: 1000px;
     margin: auto;
     display: flex;
     flex-direction: column;
 }
+
+/*         L             */
+.localization{
+    width: 1000px;    
+    text-align: center;    
+}
+.localization img{
+    margin: 0 1%;
+}
+
+/*          M                */
+.main-column{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 1000px;    
+    text-align: center;
+}
+
+/*           N               */
+nav{    
+    display: flex;
+    flex-direction: row;      
+    padding: 0;
+    justify-content: center;
+    align-items: center;     
+}
+nav a{
+    margin: 25px 14px;    
+    text-decoration: none;
+    color: black;    
+    font-size: 16px;     
+}
+
+/*             O                 */
 .oliwia{    
     max-width: 100%;
     position: relative;
@@ -188,10 +175,19 @@ nav.filter a{
     margin-left: 8px;
     margin-top: 0;
 }
-.localization{
-    width: 1000px;    
-    text-align: center;    
+
+/*          P                */
+.photo-container {
+	margin: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;                   
 }
-.localization img{
-    margin: 0 1%;
+.photo-column {
+    display: flex;
+    flex-direction: column;
+    width: 328px;  
+}
+.photo-column img{    
+    margin: 3px 0;
 }

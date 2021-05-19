@@ -1,43 +1,25 @@
 from django.shortcuts import render
+from .models import *
 
 
-# >>>>>>>>>>>>>>>>>> START PAGE <<<<<<<<<<<<<<<<<
-def start(request):
-	context ={}
-	return render(request, 'photographer/start.html', context)
+
+""" >>>>>>>>>>>> for pages: 'start', 'portrety', 'okolicznosciowe', 
+						  'rodzinne', 'sensualne', 'wiecej' <<<<<<<<<<"""
+def reusable(request, tab='', active=''):		
+	description = DescriptionReusable.objects.filter(site_tab=tab)	
+	photo_themes = PhotoTheme.objects.filter(site_tab=tab)
+	filter_foto = request.GET.get('filt', 'all')	
+	if filter_foto != 'all' :
+		photos = PhotoPortfolio.objects.filter(photo_theme=filter_foto).order_by('seat_number')
+	else:
+		photos = PhotoPortfolio.objects.filter(site_tab=tab).order_by('seat_number')		
+	columns = ('kolumna1', 'kolumna2', 'kolumna3')
+	context = {"navbar_active": tab, "full_name_tab": active,	"description": description, 
+		'photo_themes': photo_themes, "photos": photos, "columns": columns}
+	return render (request, 'photographer/reusable.html', context)
 
 
-# >>>>>>>>>>>> portrety page <<<<<<<<<<
-def portrait(request):
-	context = {}
-	return render (request, 'photographer/portrety.html', context)
-
-
-# >>>>>>>>>>>>>>>>> okolicznosciowe page <<<<<<<<<<<<<<<<<
-def events(request):
-	context = {}
-	return render(request, 'photographer/okolicznosciowe.html', context)
-
-
-# >>>>>>>>>>>>>>>>> okolicznosciowe page <<<<<<<<<<<<<<<<<
-def family(request):
-	context = {}
-	return render(request, 'photographer/rodzinne.html', context)
-
-
-# >>>>>>>>>>>>>>>>> sensualne page <<<<<<<<<<<<<<<<<
-def sensuous(request):
-	context = {}
-	return render(request, 'photographer/sensualne.html', context)
-
-
-# >>>>>>>>>>>>>>>>> wiecej page <<<<<<<<<<<<<<<<<
-def more(request):
-	context = {}
-	return render(request, 'photographer/wiecej.html', context)
-
-
-# >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
+# >>>>>>>>>>>>>>>>> blog page <<<<<<<<<<<<<<<<<
 def blog(request):
 	context = {}
 	return render(request, 'photographer/blog.html', context)
@@ -48,29 +30,3 @@ def contact(request):
 	context = {}
 	return render(request, 'photographer/kontakt.html', context)
 
-
-
-###########################################
-def wieczor(request):
-	context = {}
-	return render(request, 'photographer/wieczor.html', context)
-
-def chrzest(request):
-	context = {}
-	return render(request, 'photographer/chrzest.html', context)
-
-def slub(request):
-	context = {}
-	return render(request, 'photographer/slub.html', context)
-
-def ciazowe(request):
-	context = {}
-	return render(request, 'photographer/ciazowe.html', context)
-
-def dzieciece(request):
-	context = {}
-	return render(request, 'photographer/dzieciece.html', context)
-
-def rodzine(request):
-	context = {}
-	return render(request, 'photographer/rodzine.html', context)

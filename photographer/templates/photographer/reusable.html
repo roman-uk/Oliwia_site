@@ -5,45 +5,37 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 {% extends "./index.html" %}
 {% load static %}
 
-{%block portrety%}nav-active{%endblock%}
-
 {% block content %}
 
-<body>	
-	<div class="main-column">
-	<h2>Sesje portretowe i wizerunkowe</h2>
 
-	<h3>Branches in a Nutshell</h3>
-	<p>
-		A branch in Git is simply a lightweight movable pointer to one of these commits. The default branch name in Git is master. As you start making commits, you’re given a master branch that points to the last commit you made. Every time you commit, the master branch pointer moves forward automatically.
-	</p>
-		<div>		
-		<nav class="filter">
-			<a href="#">Wieczór panienski</a>
-			<a href="#">Chrzest</a>
-			<a href="#">Ślub cywilny</a>
-			<a href="#">wszystkie</a>
-		</nav>
-	</div>
-	<div class="photo-container">
+<body>	
+<div class="main-column">
+
 		
-		<div class="photo-column">		
-			<img src="media/portrety/lita.jpg">
-			<img src="media/portrety/lordi.jpg">
-			<img src="media/portrety/alice.jpg">
-			<img src="media/portrety/ozzy.png">	
-		</div>
-		<div class="photo-column">
-			<img src="media/portrety/motorhead.jpeg">
-			<img src="media/portrety/manson.jpeg">
-			<img src="media/portrety/roy.jpg">
-			<img src="media/portrety/rock1.jpg">
-		</div>
-		<div class="photo-column">		
-			<img src="media/portrety/rock1.jpg">
-			<img src="media/portrety/ozzygroup.jpg">
-			<img src="media/portrety/robzomd.jpg">
-			<img src="media/portrety/nightwish.jpg">			
+	<h2>{{full_name_tab}}</h2>
+	{% for item in description %}
+		<h3>{{item.title}}</h3>
+	<span id="description_content">
+		{{item.content}}
+	</span>
+	{% endfor %}
+	<div>		
+		<nav class="filter"> <!-- photo theme filter -->
+			{% for item in photo_themes %}
+				<a href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>
+			{% endfor %}
+		</nav>
+	</div>	
+		<div class="photo-container"> <!-- container for three columns -->
+			{% for col in columns %}
+				<div class="photo-column"> <!-- a column -->
+				{% for item in photos %}				
+					{% if item.column == col %}
+						<img src="{{item.photo.url}}">						
+					{% endif %}				
+				{% endfor %}
+				</div>
+			{% endfor %}	
 		</div>	
 				
 	</div>
