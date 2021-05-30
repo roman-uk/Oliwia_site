@@ -26,13 +26,10 @@ html, html a {
 }
 
 /*             B            */
-.blog-container {
-    margin: auto;
+
+.blog-record{
     display: flex;
     flex-direction: column;
-    width: 1000px;                       
-}
-.blog-entry{
     background-color: #EAF2F8 ;
     max-width: 100%;
     position: relative;
@@ -40,23 +37,32 @@ html, html a {
     padding: 8px;
     border-radius: 4px;
 }
-.blog-entry img{ 
+.blog-record img{ 
     max-width: 100%;    
     float: left;
-    margin: 0 10px 7px 0px;    
+    margin: 5px 10px 7px 0px;    
     border-radius: 5px;
 }
-.blog-entry-title{    
+.blog-record-title{    
     text-align: center;
     position: relative;
     font-size: 1.2em;
     padding: 0;
-    margin: 5px 0;
-       
+    margin: 5px 0;       
+}
+.blog-body{    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    
+    
 }
 .blog-text{    
     margin-left: 8px;
     margin-top: 0;     
+    text-align: left;    
 }
 
 /*       F           */
@@ -74,6 +80,10 @@ html, html a {
 }
 .face-inst a{
     margin: 10px;
+}
+#first-record{
+    flex-wrap: nowrap;    
+    
 }
 .filter{
     border-top: 2px solid #FF00FF;

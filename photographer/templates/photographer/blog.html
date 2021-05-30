@@ -1,104 +1,56 @@
 {% extends "./index.html" %}
+
 {% load static %}
 
-{%block blog%}nav-active{%endblock%}
 
 {% block content %}
-<head>
-	<style type="text/css">
-		#{{navbar_active}} {
-			font-weight: bold;
-    		font-size: 20px;
-    		margin: 25px 33px;
-		}
-	</style>
-</head>
+
 
 <body>
+	
 	<div class="main-column">
-
 		
-	<h2>{{full_name_tab}}</h2>
-	{% for item in description %}
-		<h3>{{item.title}}</h3>
-	<span id="description_content">
-		{{item.content}}
-	</span>
-	{% endfor %}
-	<div>		
-		<nav class="filter">
-			{% for item in photo_themes %}
-				<a href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>
+	<h2>{{full_name_tab}}</h2>	
+
+
+		<!-- The first record in blog page -->
+		<div style="background-color: white" class="blog-record">
+			{% for item in first_article %}
+				<div class="blog-record-title">
+					<span>{{item.art_title}}</span>
+				</div>
+				<div class="blog-body"  id="first-record">
+					<img src="{{item.imageUrl}}">				
+					<h4 class="blog-text">
+					{{item.art_text}}
+					</h4>
+				</div>
 			{% endfor %}
-		</nav>
-	</div>	
-		<div class="photo-container">
-			{% for col in columns %}
-				<div class="photo-column">
-				{% for item in photos %}				
-					{% if item.column == col %}
-						<img src="{{item.photo.url}}">						
-					{% endif %}				
+		</div>
+		
+
+<!--******* Other record blog page  ********-->
+			{% for title in art_titles %}
+				<div class="blog-record">
+					<div class="blog-record-title">
+<!--title record -->	<span>{{title.art_title}}</span>
+					</div>
+
+<!-- image and text in record -->					
+				{% for body in art_body %}
+					{% if body.art_title == title %}		<div class="blog-body">
+<!--image record-->			<img src="{{body.imageUrl}}">
+						<div class="blog-text">
+						<h4>
+<!--text record-->			{{body.art_text}}
+						</h4>
+						</div>
+					</div>
+					{% endif %}
 				{% endfor %}
 				</div>
 			{% endfor %}	
-		</div>	
-				
-	</div>
-
-</div>
-	<div style="text-align: center"><h2>Blog</h2></div>
-<div style="width: 1000px; margin: auto;">
-	<h3 style="text-align: center">Lorem Ipsum</h3>
-	<p>
-		Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-	</p>
-	<div class="blog-container">
-	
-		<div class="blog-entry">
-			<img src="media/blog/digital-blog-285x300.jpg">
-			<div class="blog-entry-title">
-			<span>Title article</span>
-			</div>
-			<h4 class="blog-text">
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			</h4>
-		</div>
-		<div class="blog-entry">
-			<img src="media/blog/blogging-1.jpg">
-			<div class="blog-entry-title">
-			<span>Title article</span>
-			</div>
-			<h4 class="blog-text">
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			</h4>
-		</div>
-		<div class="blog-entry">
-			<img src="media/blog/how-to-start-a-blog-illustration.jpeg">
-			<div class="blog-entry-title">
-			<span>Title article</span>
-			</div>
-			<h4 class="blog-text">
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			Cras sit amet aliquet leo. Nullam vitae libero vestibulum, pellentesque quam a, accumsan enim. Integer justo urna, faucibus eget ex nec, tincidunt accumsan lorem. Vivamus ullamcorper mollis tortor, id congue sapien semper vel. Fusce nunc eros, blandit id orci quis, condimentum egestas neque. Morbi consequat, diam eget condimentum rhoncus, magna nunc molestie dui, quis vulputate diam metus at turpis. Curabitur semper congue arcu vitae ultricies.
-			</h4>
-		</div>	
-	</div>
-
+		<!-- ------------------------------ -->
 </div>
 
 {% endblock %}

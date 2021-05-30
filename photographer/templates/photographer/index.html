@@ -16,7 +16,7 @@
 		}
 	</style>
 </head>
-<body>
+<body>	
 <div class="head">
 
 		<div style="text-align: center">
@@ -40,7 +40,7 @@
 				<a id="rodzinne" href="{% url 'reusable_page' 'rodzinne' 'Ciążowe, dziecięce, rodzinne' %}">Ciążowe, dziecięce, rodzinne</a>
 				<a id="sensualne" href="{% url 'reusable_page' 'sensualne' 'Sensualne' %}">Sensualne</a>
 				<a id="wiecej" href="{% url 'reusable_page' 'wiecej' 'Fotografia w wolnym czasie' %}">Więcej prac</a>
-				<a id="{%block blog%}{%endblock%}" href="{% url 'blog_page' %}">Blog</a>
+				<a id="blog" href="{% url 'blog_page' 'blog' 'Blog' %}">Blog</a>				
 				<a id="{%block kontakt%}{%endblock%}" href="{% url 'kontakt_page' %}">Kontakt</a>			
 			</nav>	
 
