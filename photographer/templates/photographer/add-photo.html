@@ -1,0 +1,43 @@
+{% extends "./index.html" %}
+{% load static %}
+
+{% block content %}
+
+<body>	
+
+
+<div class="main-column">
+	
+	<form enctype="multipart/form-data" method="POST" action="{% url 'add_photo_page' %}?tab={{tab}}&full_name={{full_name}}">
+		{% csrf_token %}
+
+	<table class="description">
+		<tr>
+			<td><h3>wybierz columne</h3></td>
+			<td>{{photo.column}}</td>
+		</tr>
+		<tr>
+			<td><h3>Załaduj zdjęcie</h3></td>
+			<td>{{photo.photo}}</td>
+		</tr>
+		<tr>
+			<td><h3>Temat foto</h3></td>
+			<td>{{photo.photo_theme}} {{photo.photo_theme.help_text}}</td>
+		</tr>
+		<tr>
+			<td><h3>Miejsce w columnie</h3></td>
+			<td>{{photo.seat_number}}</td>
+		</tr>				
+		<!-- invisible field, to the user does not change it -->
+		<tr style="display: none">
+			<td>wybierz strone</td>
+			<td>{{photo.site_tab}}</td>
+		</tr>
+	</table>
+		<input type="submit" name="Zapisz">
+	</form>
+</div>
+</body>
+
+
+{% endblock %}

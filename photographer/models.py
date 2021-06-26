@@ -27,8 +27,8 @@ class PhotoTheme(models.Model):
 
 #	The model for the page description and additional information for customers.
 class DescriptionReusable(models.Model):
-	title = models.CharField(max_length=50, null=True, blank=True)
-	content = models.TextField(null=True, blank=True)
+	title = models.CharField(max_length=50, blank=True)
+	content = models.TextField(blank=True)
 	site_tab = models.CharField(max_length=30, choices=site_tabs)
 
 
@@ -44,9 +44,9 @@ class PhotoPortfolio(models.Model):
 		('kolumna2', 'kolumna2'),
 		('kolumna3', 'kolumna3'),
 		)
-	photo = models.ImageField(upload_to='reusable_photo')
-	photo_theme = models.ForeignKey(PhotoTheme, null=True, 
-		blank=True, on_delete=models.PROTECT)
+	photo = models.ImageField(upload_to='reusable_photo', blank=True, null=True)
+	photo_theme = models.ForeignKey(PhotoTheme, 
+		blank=True, null=True, on_delete=models.DO_NOTHING, help_text='Morze być puste')
 	column = models.CharField(max_length=20, choices=columns)
 	seat_number = models.CharField(max_length=40) # the place of the photo in the column.
 	site_tab = models.CharField(max_length=30, choices=site_tabs)
@@ -103,3 +103,33 @@ class ArticleBody(models.Model):
 			im = ''
 		return im
 
+
+
+class ContactDescription(models.Model):
+	contact_photo = models.ImageField(null=True, blank=True, upload_to='contact_photo')
+	contact_title = models.CharField(null=True, blank=True, max_length=50)	
+	contact_text = models.TextField(null=True, blank=True)
+
+	def __str__(self):
+		return self.contact_title
+
+ # adding an imageURL method to exclude an error if the image is missing
+	@property
+	def imageUrl(self):
+		try:
+			im = self.contact_photo.url
+		except:
+			im = ''
+		return im
+
+
+class ContactData(models.Model):
+	telephone = models.CharField(null=True, blank=True, max_length=15)
+	email = models.EmailField(max_length=50, null=True, blank=True)
+	facebook_name = models.CharField(null=True, blank=True, max_length=55)
+	facebook_link = models.URLField(null=True, blank=True)
+	instagram_name = models.CharField(null=True, blank=True, max_length=55)
+	instagram_link = models.URLField(null=True, blank=True)
+
+	def __str__(self):
+		return self.email

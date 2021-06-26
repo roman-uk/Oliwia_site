@@ -28,8 +28,8 @@
 		</div>
 			
 			<nav>
-				<!-- id-for the style of the active tab -->
-				<!-- to open a new page, we provide the link with: 
+<!-- id-for the style of the active tab -->
+<!-- to open a new page, we provide the link with: 
 						'reusable_page' template url, 
 						'portrety' - the name of the active tab,
 				 		'Sesje portretowe i wizerunkowe' - full page name -->
@@ -41,7 +41,7 @@
 				<a id="sensualne" href="{% url 'reusable_page' 'sensualne' 'Sensualne' %}">Sensualne</a>
 				<a id="wiecej" href="{% url 'reusable_page' 'wiecej' 'Fotografia w wolnym czasie' %}">Więcej prac</a>
 				<a id="blog" href="{% url 'blog_page' 'blog' 'Blog' %}">Blog</a>				
-				<a id="{%block kontakt%}{%endblock%}" href="{% url 'kontakt_page' %}">Kontakt</a>			
+				<a id="contact" href="{% url 'contact_page'%}">Kontakt</a>			
 			</nav>	
 
 </div>

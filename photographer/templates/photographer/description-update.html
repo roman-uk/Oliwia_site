@@ -1,0 +1,46 @@
+<!-- 
+This is a html template to create or update description pages (under the nav-bar): "start", "Okolicznościowe", "Ciążowe, dziecięce, rodzinne", "sensualne", "Więcej" 
+-->
+
+{% extends "./index.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 
+	<style>
+		/*<!-- facebok and intagramm links in bottom page -->*/
+		.face-inst, footer {
+			display: none;
+		}
+	</style>	
+</head>
+
+<body>	
+
+
+<div class="main-column">
+	<form action="{% url 'description_reusable' %}?tab={{tab}}&full_name={{full_name}}" method="POST">
+		{% csrf_token %}
+	<table class="description">
+		<tr>
+			<td>Nazwa</td>
+			<td>{{description.title}}</td>
+		</tr>
+		<tr>
+			<td>Opis</td>
+			<td>{{description.content}}</td>
+		</tr>
+		
+		<!-- invisible field, to the user does not change it -->
+		<tr style="display: none">
+			<td>wybierz strone</td>
+			<td>{{description.site_tab}}</td>
+		</tr>
+	</table>
+		<input type="submit" name="Zapisz">
+	</form>
+</div>
+</body>
+
+{% endblock %}

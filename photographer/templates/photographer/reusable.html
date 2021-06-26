@@ -11,27 +11,65 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 <body>	
 <div class="main-column">
 
-		
 	<h2>{{full_name_tab}}</h2>
-	{% for item in description %}
-		<h3>{{item.title}}</h3>
-	<span id="description_content">
-		{{item.content}}
-	</span>
+
+	<div style="display: flex; justify-content:center;">
+		{% for item in description %}
+			<h3>{{item.title}} </h3>		 
+		{% endfor %}
+	<!--##### DROP DOWN MENU CRUD description page ####-->
+        <div class="dropdown">
+            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
+            <div class="dropdown-content drop-menu">
+            	<a href="{% url 'description_reusable' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodać</a>
+                <a href="{% url 'description_reusable' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Redagować</a>
+                <a href="{% url 'delete_description_reusable_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}" onclick="return confirm('Usunąć ?');">Usunąć</a>
+            </div>
+        </div>
+    <!--###### END drop down menu ########-->
+	</div>   
+	{% for item in description %}		
+		<span id="description_content">
+			{{item.content}}
+		</span>
 	{% endfor %}
+
 	<div>		
 		<nav class="filter"> <!-- photo theme filter -->
 			{% for item in photo_themes %}
-				<a href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>
+	<!--##### DROP DOWN MENU CRUD photo theme ####-->	
+			<div class="dropdown"> 
+	            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
+	            <div class="dropdown-content">	            	
+	                <a href="{% url 'photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&item={{item.photo_theme}}">Redagować</a>
+	                <a href="{% url 'delete_photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&item={{item.photo_theme}}" onclick="return confirm('Usunąć {{item.photo_theme}}?');">Usunąć</a>
+	            </div>
+	        </div>	
+	<!--###### END drop down menu ########-->
+	        	<a style="margin: 0 15px 0 0" href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>		
 			{% endfor %}
-		</nav>
-	</div>	
-		<div class="photo-container"> <!-- container for three columns -->
+			<a style='background: #E5E7E9' href="{% url 'photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj temat</a>
+    	</nav>
+    </div>
+						<h3><a href="{% url 'add_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj photo</a></h3>
+		<div class="photo-container"> 
+
 			{% for col in columns %}
 				<div class="photo-column"> <!-- a column -->
 				{% for item in photos %}				
 					{% if item.column == col %}
-						<img src="{{item.photo.url}}">						
+					<div class="photo-column">
+						<img src="{{item.photo.url}}">
+							<!--##### DROP DOWN MENU CRUD photo ####-->
+						<div class="dropdown" style="position: absolute;">
+				            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
+				            <div class="dropdown-content drop-menu">				            	
+				                <a href="{% url 'description_reusable' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Redagować</a>
+				                <a href="{% url 'delete_description_reusable_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}" onclick="return confirm('Usunąć ?');">Usunąć</a>
+				            </div>
+				        </div>
+				        	<!--###### END drop down menu ########-->
+        			</div>						
 					{% endif %}				
 				{% endfor %}
 				</div>
