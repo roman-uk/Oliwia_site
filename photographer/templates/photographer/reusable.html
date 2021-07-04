@@ -13,7 +13,8 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 
 	<h2>{{full_name_tab}}</h2>
 
-	<div style="display: flex; justify-content:center;">
+<!-------------- additional information of the page -->
+	<div style="display: flex; justify-content:center;">  <!--TITLE-->
 		{% for item in description %}
 			<h3>{{item.title}} </h3>		 
 		{% endfor %}
@@ -28,53 +29,48 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
         </div>
     <!--###### END drop down menu ########-->
 	</div>   
-	{% for item in description %}		
+	{% for item in description %}		  <!--CONTENT -->
 		<span id="description_content">
 			{{item.content}}
 		</span>
 	{% endfor %}
 
-	<div>		
-		<nav class="filter"> <!-- photo theme filter -->
+<!-------------- filter photo themes -->
+	<div>	
+    	<nav class="filter"> <!-- photo theme filter -->
 			{% for item in photo_themes %}
-	<!--##### DROP DOWN MENU CRUD photo theme ####-->	
-			<div class="dropdown"> 
-	            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
-	            <div class="dropdown-content">	            	
-	                <a href="{% url 'photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&item={{item.photo_theme}}">Redagować</a>
-	                <a href="{% url 'delete_photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&item={{item.photo_theme}}" onclick="return confirm('Usunąć {{item.photo_theme}}?');">Usunąć</a>
-	            </div>
-	        </div>	
-	<!--###### END drop down menu ########-->
-	        	<a style="margin: 0 15px 0 0" href="{% url 'reusable_page' item.site_tab full_name_tab %}?filt={{item.id}}">{{item.photo_theme}}</a>		
+	        	<a style="margin: 0 15px 0 0" href="{% url 'reusable_page' navbar_active full_name_tab %}?filt={{item}}">{{item}}</a>
 			{% endfor %}
-			<a style='background: #E5E7E9' href="{% url 'photo_theme_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj temat</a>
-    	</nav>
+		</nav>		
     </div>
-						<h3><a href="{% url 'add_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj photo</a></h3>
-		<div class="photo-container"> 
 
-			{% for col in columns %}
-				<div class="photo-column"> <!-- a column -->
-				{% for item in photos %}				
-					{% if item.column == col %}
-					<div class="photo-column">
-						<img src="{{item.photo.url}}">
-							<!--##### DROP DOWN MENU CRUD photo ####-->
-						<div class="dropdown" style="position: absolute;">
-				            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
-				            <div class="dropdown-content drop-menu">				            	
-				                <a href="{% url 'description_reusable' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Redagować</a>
-				                <a href="{% url 'delete_description_reusable_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}" onclick="return confirm('Usunąć ?');">Usunąć</a>
-				            </div>
-				        </div>
-				        	<!--###### END drop down menu ########-->
-        			</div>						
-					{% endif %}				
-				{% endfor %}
-				</div>
-			{% endfor %}	
-		</div>	
+
+<!------------ Three columns with photos -->
+	<h3><a href="{% url 'add_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj photo</a></h3>
+	<div class="photo-container"> 
+
+		{% for col in columns %}
+			<div class="photo-column"> 
+			{% for item in photos %}				
+				{% if item.column == col %}
+				<div class="photo-column">
+					<img src="{{item.photo.url}}">
+					
+						<!--##### DROP DOWN MENU CRUD photo ####-->
+					<div class="dropdown" style="position: absolute;">
+			            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
+			            <div class="dropdown-content drop-menu">				            	
+			                <a href="{% url 'edit_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}">Redagować</a>
+			                <a href="{% url 'delete_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć {{item.photo.name}}?');">Usunąć</a>
+			            </div>
+			        </div>
+			        	<!--###### END drop down menu ########-->
+    			</div>						
+				{% endif %}				
+			{% endfor %}
+			</div>
+		{% endfor %}	
+	</div>	
 				
 	</div>
 

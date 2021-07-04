@@ -2,12 +2,6 @@ from django import forms
 from .models import *
 
 
-class PhotoThemeForm(forms.ModelForm):
-	class Meta:
-		model = PhotoTheme
-		fields = ['photo_theme', 'site_tab']
-
-
 class DescriptionReusableForm(forms.ModelForm):
 	class Meta:
 		model = DescriptionReusable

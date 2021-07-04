@@ -15,16 +15,6 @@ site_tabs = (
 	)
 
 
-# 	The model for filtering photos on a page by topic.
-class PhotoTheme(models.Model):
-	photo_theme = models.CharField(max_length=50, unique=True)
-	site_tab = models.CharField(max_length=20, choices=site_tabs)
-
-
-	def __str__(self):
-		return self.photo_theme
-
-
 #	The model for the page description and additional information for customers.
 class DescriptionReusable(models.Model):
 	title = models.CharField(max_length=50, blank=True)
@@ -45,8 +35,7 @@ class PhotoPortfolio(models.Model):
 		('kolumna3', 'kolumna3'),
 		)
 	photo = models.ImageField(upload_to='reusable_photo', blank=True, null=True)
-	photo_theme = models.ForeignKey(PhotoTheme, 
-		blank=True, null=True, on_delete=models.DO_NOTHING, help_text='Morze być puste')
+	photo_theme = models.CharField(max_length=50, blank=True, null=True, help_text='Morze być puste')	
 	column = models.CharField(max_length=20, choices=columns)
 	seat_number = models.CharField(max_length=40) # the place of the photo in the column.
 	site_tab = models.CharField(max_length=30, choices=site_tabs)

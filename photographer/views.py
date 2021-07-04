@@ -14,39 +14,49 @@ from email.mime.multipart import MIMEMultipart
 
 
 
-""" >>>>>>>>>>>> for pages: 'start', 'portrety', 'okolicznosciowe', 
-						  'rodzinne', 'sensualne', 'wiecej' <<<<<<<<<<"""
+""" >>>>>>>>>>>> for reusable pages: 'start', 'portrety', 'okolicznosciowe', 
+						  'rodzinne', 'sensualne', 'wiecej' 
+tab(site_tab) - short page name used for css.style and models
+full_name - full name page written bellow the nav-bar <<<<<<<<<<"""
+
+
+def start_p(request):
+	return redirect('reusable_page', tab='start', full_name='Fotograf Bydgoszcz')
+
+
+# 'start', 'portrety', 'okolicznosciowe', 'rodzinne', 'sensualne', 'wiecej'
 def reusable(request, tab='', full_name=''):	
-	description = DescriptionReusable.objects.filter(site_tab=tab)	
-	photo_themes = PhotoTheme.objects.filter(site_tab=tab)
+	description = DescriptionReusable.objects.filter(site_tab=tab) #page description		
 	filter_foto = request.GET.get('filt', 'all')	
-	if filter_foto != 'all' :
-		photos = PhotoPortfolio.objects.filter(photo_theme=filter_foto).order_by('seat_number')
+	if filter_foto != 'all' : #------if user clicks filter(theme photo)
+		photos = PhotoPortfolio.objects.filter(photo_theme=filter_foto).order_by('seat_number')		
 	else:
-		photos = PhotoPortfolio.objects.filter(site_tab=tab).order_by('seat_number')		
+		photos = PhotoPortfolio.objects.filter(site_tab=tab).order_by('seat_number')						
 	columns = ('kolumna1', 'kolumna2', 'kolumna3')
-	context = {"navbar_active": tab, "full_name_tab": full_name,	"description": description, 
-		'photo_themes': photo_themes, "photos": photos, "columns": columns}
+	# getting only the values of the "hoto_theme" field and turning them into a set of unique values
+	photo_themes = set(photos.values_list('photo_theme', flat=True)) 
+	context = {'photo_themes': photo_themes, "navbar_active": tab, "full_name_tab": full_name, "description": description, 
+		"photos": photos, "columns": columns}	
 	return render (request, 'photographer/reusable.html', context)
 	
 
-
+# function for adding and editing description on reusable page
 def description_reusable(request):
 	tab = request.GET.get('tab', '')
 	full_name = request.GET.get('full_name', '')	
-	if request.method == 'GET':
-		try:
+	if request.method == 'GET': #---if owner clicks add or edit description page
+		try:  			#---if clicks edit description page
 			descript = DescriptionReusable.objects.get(site_tab=tab)
 			description_form = DescriptionReusableForm(initial={'title': descript.title, 'content':descript.content, 'site_tab': tab})
-		except:
+		except:			#---if clicks add description page
 			description_form = DescriptionReusableForm(initial={'site_tab': tab})
 		context = {'description': description_form, 'tab': tab, 'full_name': full_name}		
 		return render(request, 'photographer/description-update.html', context)
 	elif request.method == 'POST':
-		try:
+		try:			#	return completed form edit
 			descript = DescriptionReusable.objects.get(site_tab=tab)				
 			description_form = DescriptionReusableForm(request.POST, instance=descript)
-		except:
+		except:			#	return completed form add
 			description_form = DescriptionReusableForm(request.POST)
 		if description_form.is_valid():
 			description_form.save()			
@@ -55,6 +65,7 @@ def description_reusable(request):
 			return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
 
 
+# function for delete description reusable on page
 def delete_description_reusable(request):	
 	tab = request.GET.get('tab')
 	full_name = request.GET.get('full_name')	
@@ -62,58 +73,16 @@ def delete_description_reusable(request):
 	descript.delete()	
 	return redirect('reusable_page', tab=tab, full_name=full_name)
 
-# =======================================
-def photo_theme(request):
-	tab = request.GET.get('tab')
-	full_name = request.GET.get('full_name')
-	item = request.GET.get('item', '')
-	if request.method == 'GET':
-		try:			
-			theme = PhotoTheme.objects.get(photo_theme=item)
-			theme = PhotoThemeForm(initial={'site_tab': tab, 'photo_theme': theme.photo_theme})
-			context = {'theme': theme, 'tab': tab, 'full_name': full_name, 'item': item}			
-		except:
-			theme = PhotoThemeForm(initial={'site_tab': tab})
-			context = {'theme': theme, 'tab': tab, 'full_name': full_name, 'item': item}
-		return render(request, 'photographer/photo-theme.html', context)
-	elif request.method == 'POST':
-		try:
-			old_theme = PhotoTheme.objects.get(photo_theme=item)
-			theme_form = PhotoThemeForm(request.POST, instance=old_theme)
-			if theme_form.is_valid():
-				theme_form.save()				
-				return redirect('reusable_page', tab=tab, full_name=full_name)
-			else:
-				return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
-		except:
-			theme = PhotoThemeForm(request.POST)
-			if theme.is_valid():
-				theme.save()
-				return redirect('reusable_page', tab=tab, full_name=full_name)
-			else:
-				return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
 
-
-def delete_photo_theme(request):
-	tab = request.GET.get('tab')
-	full_name = request.GET.get('full_name')
-	item = request.GET.get('item')
-	item = PhotoTheme.objects.get(photo_theme=item)
-	item.delete()
-	return redirect('reusable_page', tab=tab, full_name=full_name)
-
-
+# function for adding photo on reusable page
 def add_photo(request):
 	tab = request.GET.get('tab')
-	full_name = request.GET.get('full_name')
-	
-	# print('---------------', theme)
-	if request.method == 'GET':	
-			
+	full_name = request.GET.get('full_name')	
+	if request.method == 'GET':		#	if owner clicks add photo			
 		photo = PhotoPortfolioForm(initial={'site_tab': tab})
 		context = {'photo': photo, 'tab': tab, 'full_name': full_name}
 		return render(request, 'photographer/add-photo.html', context)
-	elif request.method == 'POST' :
+	elif request.method == 'POST':	#	return completed form add
 		photo = PhotoPortfolioForm(request.POST, request.FILES)		
 		if photo.is_valid():			
 			photo.save()
@@ -122,9 +91,34 @@ def add_photo(request):
 			return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
 
 
+# function for editing photo on reusable page
+def edit_photo(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk = request.GET.get('pk')	
+	old= PhotoPortfolio.objects.get(id=pk)
+	if request.method == 'GET':		#	if owner clicks edit photo
+		# fill the form(photo_form) with existing values
+		photo_form = PhotoPortfolioForm(initial={'column': old.column, 'photo': old.photo, 'photo_theme': old.photo_theme, 'seat_number': old.seat_number, 'site_tab': old.site_tab})
+		context = {'photo': photo_form, 'tab': tab, 'full_name': full_name, 'id_photo': pk}		
+		return render(request, 'photographer/edit-photo.html', context)
+	elif request.method == 'POST':		#	return completed form edit
+		photo_form = PhotoPortfolioForm(request.POST, request.FILES, instance=old)
+		if photo_form.is_valid():
+			photo_form.save()
+			return redirect('reusable_page', tab=tab, full_name=full_name)
+		else:
+			return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
 
-	# pk = request.GET.get('pk', '')
-	# photo = PhotoPortfolio.objects.get(id=pk)
+
+# photo deletion function on reusable page
+def delete_photo(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk = request.GET.get('pk')
+	photo= PhotoPortfolio.objects.get(id=pk)
+	photo.delete()
+	return redirect('reusable_page', tab=tab, full_name=full_name)
 
 
 # >>>>>>>>>>>>>>>>> blog page <<<<<<<<<<<<<<<<<
