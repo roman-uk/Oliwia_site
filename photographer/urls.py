@@ -11,6 +11,7 @@ urlpatterns = [
 	path('reusable/edit_photo', views.edit_photo, name='edit_photo_page'),
 	path('reusable/delete_photo', views.delete_photo, name='delete_photo_page'),
 	path('blog/<str:tab>/<str:full_name>', views.blog, name='blog_page'),
+	path('blog/add-article', views.add_article, name='add_article_page'),
 	path('contact', views.contact, name='contact_page'),
 			
 ]

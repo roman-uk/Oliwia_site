@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 
 
+		# reusable
 class DescriptionReusableForm(forms.ModelForm):
 	class Meta:
 		model = DescriptionReusable
@@ -30,13 +31,21 @@ class FirstArticleForm(forms.ModelForm):
 		fields = '__all__'
 
 
+			# blog
+class ArticleTitleForm(forms.ModelForm):
+	class Meta:
+		model = ArticleTitle
+		fields = '__all__'
+
+
 class ArticleBodyForm(forms.ModelForm):
 	class Meta:
 		model = ArticleBody
 		fields = '__all__'
+		exclude = ("art_title",)
 
 
-
+# 			contact
 class ContactDescriptionForm(forms.ModelForm):
 	class Meta:
 		model = ContactDescription

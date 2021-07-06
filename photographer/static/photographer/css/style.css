@@ -50,14 +50,15 @@ html, html a {
     padding: 0;
     margin: 5px 0;       
 }
+.blog-record-title span{
+    font-size: 20px;
+}
 .blog-body{    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
-    justify-content: center;
-    
-    
+    justify-content: center;    
 }
 .blog-text{    
     margin-left: 8px;
@@ -101,7 +102,10 @@ html, html a {
 .dropdown-content a:hover{
     background-color: #B2BABB;
 }
-.dropdown:hover .dropdown-content{
+.dropdown:active .dropdown-content{
+    display: block;
+}
+.dropdown-content:hover{
     display: block;
 }
 .drop-plus{

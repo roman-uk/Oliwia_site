@@ -67,20 +67,19 @@ class FirstArticle(models.Model):
 
 
 class ArticleTitle(models.Model):
-	art_title = models.CharField(max_length=50)
+	art_title = models.CharField(max_length=50, unique=True)
 
 	def __str__(self):
 		return self.art_title
 
 
 class ArticleBody(models.Model):
-	art_title = models.ForeignKey(ArticleTitle,	on_delete=models.CASCADE)
+	art_title = models.ForeignKey(ArticleTitle, on_delete=models.SET_NULL, null=True, blank=True)
 	art_photo = models.ImageField(upload_to='blog_photo', null=True, blank=True)
-	art_text = models.TextField(null=True, blank=True)
-	art_order = models.IntegerField()
+	art_text = models.TextField(null=True, blank=True)	
 
 	def __str__(self):
-		name = str(self.art_title) + " " + str(self.art_order)
+		name = str(self.art_title) + " " + str(self.id)
 		return name
 
  # adding an imageURL method to exclude an error if the image is missing

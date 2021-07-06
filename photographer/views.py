@@ -131,6 +131,35 @@ def blog(request, tab='', full_name=''):
 	return render(request, 'photographer/blog.html', context)
 
 
+# adding new articles to the blog page.
+def add_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+#	--request for a form for adding an article
+	if request.method == 'GET': 	
+		title = ArticleTitleForm() #	--the form for the article title
+		article = ArticleBodyForm() # 	--the form for the article body	without field art_title. field was excluded in Forms
+		context = {"navbar_active": tab, "full_name": full_name, 'title': title,
+			'article': article}		
+		return render (request, 'photographer/blog-add.html', context)
+# 	--returning the form for adding an article
+	elif request.method == "POST":		
+		title = ArticleTitleForm(request.POST)	#	-- saving the article title	
+		title.save()
+		title = title.cleaned_data
+		title = title['art_title']
+		title = ArticleTitle.objects.get(art_title=title)		
+		# title = title['art_title'].value()
+		article = ArticleBodyForm(request.POST, request.FILES)#	--the article body without title(art_title=0).
+		article.save() 
+		article = article.cleaned_data
+		article = article['art_text']		
+		article = ArticleBody.objects.get(art_text=article)
+		article.art_title = title	# --replacing null article title with the one entered by the user.			
+		article.save(update_fields=['art_title'])
+		return redirect('blog_page', tab=tab, full_name=full_name)
+
+
 # >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
 def contact(request):
 	contact_descript = ContactDescription.objects.all()

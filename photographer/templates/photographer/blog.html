@@ -10,10 +10,10 @@
 	
 	<div class="main-column">
 		
-	<h2>{{full_name_tab}}</h2>	
+		<h2>{{full_name_tab}}</h2>	
+		
 
-
-		<!-- The first record in blog page -->
+	<!-- The first record in blog page -->
 		<div style="background-color: white" class="blog-record">
 			{% for item in first_article %}
 				<div class="blog-record-title">
@@ -27,21 +27,38 @@
 				</div>
 			{% endfor %}
 		</div>
+
+	<!-- Adding new articles to the page. -->
+		<h3><a href="{% url 'add_article_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj artykuł</a></h3>
 		
 
-<!--******* Other record blog page  ********-->
+<!--******* Other articles blog page  ********-->
 			{% for title in art_titles %}
+
 				<div class="blog-record">
+
 					<div class="blog-record-title">
-<!--title record -->	<span>{{title.art_title}}</span>
+
+	<!--title record --><span>{{title.art_title}}</span>
+
+		<!--##### DROP DOWN MENU edit and delit articles ####-->
+					<div class="dropdown">
+			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
+			            <div class="dropdown-content drop-menu">				            	
+			                <a href="{% url 'edit_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}">Redagować</a>
+			                <a href="{% url 'delete_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć {{item.photo.name}}?');">Usunąć</a>
+			            </div>
+			        </div>
+			    <!--###### END drop down menu ########-->
 					</div>
+
 
 <!-- image and text in record -->					
 				{% for body in art_body %}
 					{% if body.art_title == title %}		<div class="blog-body">
 <!--image record-->			<img src="{{body.imageUrl}}">
 						<div class="blog-text">
-						<h4>
+						<h4 style="margin: 3px">
 <!--text record-->			{{body.art_text}}
 						</h4>
 						</div>
@@ -51,6 +68,6 @@
 				</div>
 			{% endfor %}	
 		<!-- ------------------------------ -->
-</div>
-
+	</div>
+</body>
 {% endblock %}
