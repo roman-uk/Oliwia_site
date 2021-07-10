@@ -29,6 +29,9 @@ class FirstArticleForm(forms.ModelForm):
 	class Meta:
 		model = FirstArticle
 		fields = '__all__'
+		widgets = {
+            'art_text': forms.Textarea(attrs={'cols': 80, 'rows': 15}),
+        }
 
 
 			# blog
@@ -41,7 +44,15 @@ class ArticleTitleForm(forms.ModelForm):
 class ArticleBodyForm(forms.ModelForm):
 	class Meta:
 		model = ArticleBody
-		fields = '__all__'
+		fields = '__all__'		
+		widgets = {
+            'art_text': forms.Textarea(attrs={'cols': 80, 'rows': 15}),
+        }
+
+
+class AddBodyForm(ArticleBodyForm):
+	class Meta:
+		model = ArticleBody
 		exclude = ("art_title",)
 
 

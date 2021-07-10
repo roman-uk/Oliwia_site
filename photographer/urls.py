@@ -10,8 +10,13 @@ urlpatterns = [
 	path('reusable/add-photo', views.add_photo, name='add_photo_page'),
 	path('reusable/edit_photo', views.edit_photo, name='edit_photo_page'),
 	path('reusable/delete_photo', views.delete_photo, name='delete_photo_page'),
-	path('blog/<str:tab>/<str:full_name>', views.blog, name='blog_page'),
-	path('blog/add-article', views.add_article, name='add_article_page'),
-	path('contact', views.contact, name='contact_page'),
-			
+	path('blog/<str:tab>/<str:full_name>', views.blog, name='blogURL'),
+	path('blog/add-article', views.add_article, name='add_articleURL'),
+	path('blog/edit-article', views.edit_article, name='edit_articleURL'),
+	path('blog/expand-article', views.expand_article, name='expand_articleURL'),
+	path('blog/delete-article', views.delete_article, name='delete_articleURL'),
+	path('blog/delete-part-article', views.del_part_article, name='del_part_articleURL'),
+	path('blog/top-article', views.top_article, name='top_articleURL'),
+	path('blog/delete-top-article', views.delete_top_article, name='delete_top_articleURL'),
+	path('contact', views.contact, name='contact_page'),			
 ]

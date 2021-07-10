@@ -5,21 +5,37 @@
 
 {% block content %}
 
-
 <body>
+	<style type="text/css">
+		.drop-plus{
+			background: #F8F9F9;
+		
+		}
+	</style>
 	
-	<div class="main-column">
+<div class="main-column">
 		
-		<h2>{{full_name_tab}}</h2>	
-		
+		<h2>{{full_name_tab}}</h2>		
 
-	<!-- The first record in blog page -->
-		<div style="background-color: white" class="blog-record">
+	<!--***** The article attached at the top of the page *****-->
+	<a href="{% url 'top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">
+		<h4 style="position: absolute;">Utwórz wpis, który będzie na górze strony bloga</h4>
+	</a>
+		<div class="blog-record">
 			{% for item in first_article %}
 				<div class="blog-record-title">
 					<span>{{item.art_title}}</span>
+									<!--##### DROP DOWN MENU edit and delit title ####-->
+					<div class="dropdown">
+			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
+			            <div class="dropdown-content drop-menu">	           	
+			                <a href="{% url 'top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}">Redagować</a>	                 
+			                <a href="{% url 'delete_top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{item.art_title}}>>?');">Usunąć</a>
+			            </div>
+			        </div>
+			    <!--###### END drop down menu ########-->
 				</div>
-				<div class="blog-body"  id="first-record">
+				<div class="blog-body">
 					<img src="{{item.imageUrl}}">				
 					<h4 class="blog-text">
 					{{item.art_text}}
@@ -27,47 +43,85 @@
 				</div>
 			{% endfor %}
 		</div>
+	<!--***** end top article *****-->
 
-	<!-- Adding new articles to the page. -->
-		<h3><a href="{% url 'add_article_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj artykuł</a></h3>
 		
 
 <!--******* Other articles blog page  ********-->
-			{% for title in art_titles %}
 
-				<div class="blog-record">
+		<!-- The link to add new articles to the page. -->
+				<h3><a href="{% url 'add_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}"> Dodaj artykuł</a></h3>
+	<div class="blog-record">
 
-					<div class="blog-record-title">
+		
+	{% for title in art_titles %}	
 
-	<!--title record --><span>{{title.art_title}}</span>
-
-		<!--##### DROP DOWN MENU edit and delit articles ####-->
+			<!--** Title article **-->
+		<div class="blog-record-title">
+			<span>{{title.art_title}}</span>	
+				<!--##### DROP DOWN MENU edit and delit title ####-->
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
-			            <div class="dropdown-content drop-menu">				            	
-			                <a href="{% url 'edit_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}">Redagować</a>
-			                <a href="{% url 'delete_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć {{item.photo.name}}?');">Usunąć</a>
+			            <div class="dropdown-content drop-menu">
+			            	 <a href="{% url 'expand_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}&field=title">Poszerzyć</a>				            	
+			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}&field=title">Redagować</a>	                 
+			                <a href="{% url 'delete_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{title.art_title}}>>?');">Usunąć</a>
 			            </div>
 			        </div>
 			    <!--###### END drop down menu ########-->
-					</div>
+		</div> 
+		<!--*** end title ***-->
 
 
-<!-- image and text in record -->					
+				<!-- image and text in article -->					
 				{% for body in art_body %}
-					{% if body.art_title == title %}		<div class="blog-body">
-<!--image record-->			<img src="{{body.imageUrl}}">
-						<div class="blog-text">
-						<h4 style="margin: 3px">
-<!--text record-->			{{body.art_text}}
-						</h4>
+					{% if body.art_title == title %}		
+		<div class="blog-body">
+
+							<!-- IMAGE -->
+<!--image>>--> 		 <img src="{{body.imageUrl}}">
+
+							<!--##### DROP DOWN MENU edit and delit "IMAGE" ####-->
+					<div class="dropdown" style="left: 20%; position: absolute;">
+			            <h4 style="margin: 2%;" class="drop-plus">
+			            	{% if body.art_photo != '' %}<!-- do not display the edit icon if the image is missing -->
+			            	<b>&#128397;&#65039;</b>
+			            	{% endif %}
+			            </h4>
+			            <div class="dropdown-content drop-menu">			            	
+			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=image">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=image" onclick="return confirm('Usunąć {{body.art_photo.name}}?');">Usunąć</a>
+			            </div>
+			        </div>
+			    		<!--###### END drop down menu "IMAGE" ########-->
+
+			    		<!-- TEXT -->
+				<div class="blog-text">
+					<h4 style="margin: 3px">
+
+						<!--##### DROP DOWN MENU edit and delit "TEXT" ####-->
+					<div class="dropdown">
+				            <h4 style="margin: 0;" class="drop-plus">
+				            	{% if body.art_text != '' %}
+				            	<b> &#128397;&#65039;</b>
+				            	{% endif %}
+				            </h4>
+			            <div class="dropdown-content drop-menu">	            	
+			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=text">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=text" onclick="return confirm('Usunąć ten blok tekstu?');">Usunąć</a>
+			            </div>
+			        </div>
+			    <!--###### END drop down menu "TEXT" ########-->
+
+<!--text>>>-->		{{body.art_text}}
+					</h4>
 						</div>
-					</div>
+		</div>
 					{% endif %}
-				{% endfor %}
-				</div>
-			{% endfor %}	
+				{% endfor %}				
+	{% endfor %}
+	</div>	
 		<!-- ------------------------------ -->
-	</div>
+</div>
 </body>
 {% endblock %}

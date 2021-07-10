@@ -126,9 +126,51 @@ def blog(request, tab='', full_name=''):
 	first_article = FirstArticle.objects.all()	
 	art_titles = ArticleTitle.objects.order_by('-id')
 	art_body = ArticleBody.objects.all()
-	context = {"navbar_active": tab, "full_name_tab": full_name, 
+	modal = request.GET.get('modal', "none")
+	context = {"navbar_active": tab, "full_name_tab": full_name, 'modal': modal, 
 		"first_article": first_article, 'art_titles': art_titles, 'art_body': art_body}
 	return render(request, 'photographer/blog.html', context)
+
+
+# creating or editing an article that is attached to the top of the page
+def top_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk = request.GET.get('pk', '')	# id of the article is edited
+	if request.method == "GET":		
+		if pk == '':	#add new article
+			article_form = FirstArticleForm()			
+		elif pk != '':	#editing exist article
+			article = FirstArticle.objects.get(id=pk)
+			article_form = FirstArticleForm(initial={'art_photo': article.art_photo,
+				'art_title': article.art_title, 'art_text': article.art_text})		
+		context = {"navbar_active": tab, "full_name": full_name, 'article_form': article_form, 'pk':pk}
+		return render(request, 'photographer/blog-top-article.html', context)
+	elif request.method == 'POST':
+		try:		#editing the exist article
+			old_article = FirstArticle.objects.get(id=pk)
+			new_article = FirstArticleForm(request.POST, request.FILES, instance=old_article )
+			if new_article.is_valid:
+				new_article.save()
+			else:
+				return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
+		except:		#add new article
+			article = FirstArticleForm(request.POST, request.FILES)
+			if article.is_valid:
+				article.save()
+			else:
+				return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')			
+		return redirect('blogURL', tab=tab, full_name=full_name)
+
+
+# delete an article that is attached to the top of the page
+def delete_top_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk = request.GET.get('pk')	# id of the article is deleted
+	article = FirstArticle.objects.get(id=pk)
+	article.delete()
+	return redirect('blogURL', tab=tab, full_name=full_name)
 
 
 # adding new articles to the blog page.
@@ -138,7 +180,7 @@ def add_article(request):
 #	--request for a form for adding an article
 	if request.method == 'GET': 	
 		title = ArticleTitleForm() #	--the form for the article title
-		article = ArticleBodyForm() # 	--the form for the article body	without field art_title. field was excluded in Forms
+		article = AddBodyForm() # 	--the form for the article body	without field art_title. field was excluded in Forms
 		context = {"navbar_active": tab, "full_name": full_name, 'title': title,
 			'article': article}		
 		return render (request, 'photographer/blog-add.html', context)
@@ -147,18 +189,102 @@ def add_article(request):
 		title = ArticleTitleForm(request.POST)	#	-- saving the article title	
 		title.save()
 		title = title.cleaned_data
-		title = title['art_title']
-		title = ArticleTitle.objects.get(art_title=title)		
-		# title = title['art_title'].value()
-		article = ArticleBodyForm(request.POST, request.FILES)#	--the article body without title(art_title=0).
-		article.save() 
+		title = title['art_title']	#  == title['art_title'].value()
+		title = ArticleTitle.objects.get(art_title=title)			
+		article = AddBodyForm(request.POST, request.FILES)#	--the article body without title. title=blank.
+		article.save()		 #	saving the article body
 		article = article.cleaned_data
 		article = article['art_text']		
 		article = ArticleBody.objects.get(art_text=article)
-		article.art_title = title	# --replacing null article title with the one entered by the user.			
-		article.save(update_fields=['art_title'])
-		return redirect('blog_page', tab=tab, full_name=full_name)
+		article.art_title = title	# --replacing blank article title with the one entered by the user.			
+		article.save(update_fields=['art_title'])	#	overwrite only "art_titlt"  field
+		return redirect('blogURL', tab=tab, full_name=full_name)
 
+
+# editing an article
+	# this function uses the same template as "expand_article"
+def edit_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')	
+	pk= request.GET.get('pk', '') # id 
+	field = request.GET.get('field')   # the field that will change (title or image or text)	
+	if request.method == 'GET':
+		help_text = 'Edytuj wpis na stronie blog '
+		if field == 'title':
+			title = ArticleTitle.objects.get(id=pk)
+			title_form = ArticleTitleForm(initial={'art_title': title.art_title})			
+			context = {"navbar_active": tab, "full_name": full_name, 'help_text': help_text, 
+				'title_form':title_form, 'field': field, 'pk': pk, 'edit_or_expand':'edit_articleURL'}		
+		elif field != 'title':			
+			body = ArticleBody.objects.get(id=pk)
+			body_form = ArticleBodyForm(initial={'art_title': body.art_title, 'art_photo': body.art_photo,
+				'art_text': body.art_text})			
+			context = {"navbar_active": tab, "full_name": full_name,  'help_text': help_text,
+				'body_form': body_form, 'field': field, 'pk': pk, 'edit_or_expand':'edit_articleURL'}
+		return render(request, 'photographer/blog-edit.html', context)
+	elif request.method == "POST":
+		if field == 'title':
+			old_title = ArticleTitle.objects.get(id=pk)
+			title = ArticleTitleForm(request.POST, instance=old_title)
+			title.save()
+		elif field != 'title':
+			old_body = ArticleBody.objects.get(id=pk)
+			article = ArticleBodyForm(request.POST, request.FILES, instance=old_body)
+			article.save()
+		return redirect('blogURL', tab=tab, full_name=full_name)
+
+
+# this function extends an existing article by adding a photo or text.
+	# the function uses the same template as "edit_article"
+def expand_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk= request.GET.get('pk', '')	# id of the foreign key(art_title). article name.
+	title = ArticleTitle.objects.get(id=pk)
+	if request.method == 'GET':
+		body_form = ArticleBodyForm(initial={'art_title': title.id})
+		help_text = "Tutaj możesz poszerzyć artykuł i dodać do niego zdjęcie lub tekst."
+		context = {"navbar_active": tab, "full_name": full_name, 'body_form': body_form, 'help_text': help_text, 
+			'field': 'image, .text', 'pk': pk, 'edit_or_expand':'expand_articleURL'}
+		return render(request, 'photographer/blog-edit.html', context)
+	elif request.method == 'POST':
+		article = ArticleBodyForm(request.POST, request.FILES)
+		if article.is_valid:
+			article.save()
+			return redirect('blogURL', tab=tab, full_name=full_name)
+		else:
+			return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
+
+
+# delete part of the article(image or text)
+def del_part_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk= request.GET.get('pk', '')	# id of the article from which the field will be deleted
+	field = request.GET.get('field') # the field that will delete(image or text)
+	article = ArticleBody.objects.get(id=pk)
+	if field == 'text':					
+		article.art_text = ''
+		if article.art_photo == '':
+			article.delete()
+			return redirect('blogURL', tab=tab, full_name=full_name)
+	elif field == 'image':
+		article.art_photo = ''
+		if article.art_text == '':
+			article.delete()
+			return redirect('blogURL', tab=tab, full_name=full_name)	
+	article.save()
+	return redirect('blogURL', tab=tab, full_name=full_name)
+
+
+# delete an article
+def delete_article(request):
+	tab = request.GET.get('tab')
+	full_name = request.GET.get('full_name')
+	pk = request.GET.get('pk')	
+	article = ArticleTitle.objects.get(id=pk)
+	article.delete()
+	return redirect('blogURL', tab=tab, full_name=full_name)
 
 # >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
 def contact(request):

@@ -1,0 +1,61 @@
+{% extends "./index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<head>
+	<!-- this template is used by two functions: edit_article and expand_article -->
+	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 
+	<style>
+		/*<!-- facebok and intagramm links in bottom page -->*/
+		.face-inst{display: none;}
+		/*		all fields are invisible*/
+		tr {display: none;}
+		/*I pass the class name so that the required field becomes visible*/
+		.{{field}}{display: block;} 
+	</style>
+</head>
+
+
+<body>
+	
+	<div class="main-column">
+		<!-- this template is used by two functions: edit_article and expand_article -->
+		
+		
+		<h3>{{help_text}}</h3>	
+
+
+		<form enctype="multipart/form-data" method="POST" action="{% url edit_or_expand %}?tab={{navbar_active}}&full_name={{full_name}}&pk={{pk}}&field={{field}}">
+		{% csrf_token %}
+
+		<table class="description">
+			<tr class="title"> 		<!-- this field is only used by the 'edit_article' -->
+				<td><h3>Nazwa artykłu</h3></td>
+				<td>{{title_form.art_title}}</td>
+			</tr>
+			<tr> 	<!-- this field is invisible all the time. this is only used by the 'expand_article' -->
+				<td><h3>Nazwa artykłu</h3></td>
+				<td>{{body_form.art_title}}</td>
+			</tr>
+			<tr class="image">
+				<td><h3>Foto artykłu</h3></td>
+				<td>{{body_form.art_photo}}</td>			
+			</tr>
+			<tr class="text">
+				<td><h3>Text artykłu</h3></td>		
+				<td>{{body_form.art_text}}</td>			
+			</tr>			
+		</table>
+
+			<input type="submit" value="Zapisz">
+
+		</form>
+
+	</div>
+
+
+
+</body>
+{% endblock %}

@@ -74,7 +74,7 @@ class ArticleTitle(models.Model):
 
 
 class ArticleBody(models.Model):
-	art_title = models.ForeignKey(ArticleTitle, on_delete=models.SET_NULL, null=True, blank=True)
+	art_title = models.ForeignKey(ArticleTitle, on_delete=models.CASCADE, null=True, blank=True)
 	art_photo = models.ImageField(upload_to='blog_photo', null=True, blank=True)
 	art_text = models.TextField(null=True, blank=True)	
 

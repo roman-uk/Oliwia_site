@@ -1,4 +1,6 @@
 <!-- Adding new articles to the blog page. -->
+
+
 {% extends "./index.html" %}
 
 {% load static %}
@@ -24,7 +26,7 @@
 		
 	<h2>Dodaj nowy artykul</h2>	
 	
-	<form enctype="multipart/form-data" method="POST" action="{% url 'add_article_page' %}?tab={{navbar_active}}&full_name={{full_name}}">
+	<form enctype="multipart/form-data" method="POST" action="{% url 'add_articleURL' %}?tab={{navbar_active}}&full_name={{full_name}}">
 		{% csrf_token %}
 
 		<table class="description">

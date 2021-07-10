@@ -1,0 +1,53 @@
+<!-- Adding or editing articles to the blog page. -->
+
+
+{% extends "./index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+
+<head>
+	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 
+	<style>
+		/*<!-- facebok and intagramm links in bottom page -->*/
+		.face-inst{display: none;}		
+	</style>
+</head>
+
+<body>
+	
+	<div class="main-column">
+		
+	<h2>Górny artykuł</h2>	
+	
+	<form enctype="multipart/form-data" method="POST" action="{% url 'top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name}}&pk={{pk}}">
+		{% csrf_token %}
+
+		<table class="description">
+			<tr>
+				<td><h3>Nazwa artykłu</h3></td>
+				<td>{{article_form.art_title}}</td>
+			</tr>
+			<tr>
+				<td><h3>foto artykłu</h3></td>
+				<td>{{article_form.art_photo}}</td>			
+			</tr>
+			<tr>
+				<td><h3>text artykłu</h3></td>		
+				<td>{{article_form.art_text}}</td>			
+			</tr>	
+			
+		</table>
+			<input type="submit" value="Zapisz">
+
+	</form>
+
+</div>
+</body>
+
+		
+
+{% endblock %}
