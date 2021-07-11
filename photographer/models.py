@@ -92,6 +92,7 @@ class ArticleBody(models.Model):
 		return im
 
 
+# >>>>>>>>>>>>> CONTACT <<<<<<<<<<<<
 
 class ContactDescription(models.Model):
 	contact_photo = models.ImageField(null=True, blank=True, upload_to='contact_photo')

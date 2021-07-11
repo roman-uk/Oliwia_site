@@ -7,18 +7,20 @@
 
 <body>
 	<style type="text/css">
-		.drop-plus{
-			background: #F8F9F9;
-		
+		.drop-plus{background: #F8F9F9;}
+		#blog {
+			font-weight: bold;
+    		font-size: 20px;
+    		margin: 25px 33px;
 		}
 	</style>
 	
 <div class="main-column">
 		
-		<h2>{{full_name_tab}}</h2>		
+		<h2>Blog</h2>		
 
 	<!--***** The article attached at the top of the page *****-->
-	<a href="{% url 'top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">
+	<a href="{% url 'top_articleURL' %}">
 		<h4 style="position: absolute;">Utwórz wpis, który będzie na górze strony bloga</h4>
 	</a>
 		<div class="blog-record">
@@ -29,8 +31,8 @@
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 			            <div class="dropdown-content drop-menu">	           	
-			                <a href="{% url 'top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}">Redagować</a>	                 
-			                <a href="{% url 'delete_top_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{item.art_title}}>>?');">Usunąć</a>
+			                <a href="{% url 'top_articleURL' %}?pk={{item.id}}">Redagować</a>	                 
+			                <a href="{% url 'delete_top_articleURL' %}?&pk={{item.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{item.art_title}}>>?');">Usunąć</a>
 			            </div>
 			        </div>
 			    <!--###### END drop down menu ########-->
@@ -50,7 +52,7 @@
 <!--******* Other articles blog page  ********-->
 
 		<!-- The link to add new articles to the page. -->
-				<h3><a href="{% url 'add_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}"> Dodaj artykuł</a></h3>
+				<h3><a href="{% url 'add_articleURL' %}"> Dodaj artykuł</a></h3>
 	<div class="blog-record">
 
 		
@@ -63,9 +65,9 @@
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 			            <div class="dropdown-content drop-menu">
-			            	 <a href="{% url 'expand_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}&field=title">Poszerzyć</a>				            	
-			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}&field=title">Redagować</a>	                 
-			                <a href="{% url 'delete_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{title.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{title.art_title}}>>?');">Usunąć</a>
+			            	 <a href="{% url 'expand_articleURL' %}?pk={{title.id}}&field=title">Poszerzyć</a>				            	
+			                <a href="{% url 'edit_articleURL' %}?pk={{title.id}}&field=title">Redagować</a>	                 
+			                <a href="{% url 'delete_articleURL' %}?pk={{title.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{title.art_title}}>>?');">Usunąć</a>
 			            </div>
 			        </div>
 			    <!--###### END drop down menu ########-->
@@ -89,8 +91,8 @@
 			            	{% endif %}
 			            </h4>
 			            <div class="dropdown-content drop-menu">			            	
-			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=image">Redagować</a>	                 
-			                <a href="{% url 'del_part_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=image" onclick="return confirm('Usunąć {{body.art_photo.name}}?');">Usunąć</a>
+			                <a href="{% url 'edit_articleURL' %}?pk={{body.id}}&field=image">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?pk={{body.id}}&field=image" onclick="return confirm('Usunąć {{body.art_photo.name}}?');">Usunąć</a>
 			            </div>
 			        </div>
 			    		<!--###### END drop down menu "IMAGE" ########-->
@@ -107,8 +109,8 @@
 				            	{% endif %}
 				            </h4>
 			            <div class="dropdown-content drop-menu">	            	
-			                <a href="{% url 'edit_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=text">Redagować</a>	                 
-			                <a href="{% url 'del_part_articleURL' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{body.id}}&field=text" onclick="return confirm('Usunąć ten blok tekstu?');">Usunąć</a>
+			                <a href="{% url 'edit_articleURL' %}?pk={{body.id}}&field=text">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?pk={{body.id}}&field=text" onclick="return confirm('Usunąć ten blok tekstu?');">Usunąć</a>
 			            </div>
 			        </div>
 			    <!--###### END drop down menu "TEXT" ########-->
