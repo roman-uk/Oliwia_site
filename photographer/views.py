@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .models import *
 from .forms import *
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseNotFound
 
 # h: oliwia 	p: roman
@@ -270,15 +270,19 @@ def delete_article(request):
 	article = ArticleTitle.objects.get(id=pk)
 	article.delete()
 	return redirect('blogURL')
+	
 
 # >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
 def contact(request):
+	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>1')
 	contact_descript = ContactDescription.objects.all()
 	contact_data = ContactData.objects.all()
 	client_form = ClientForm()
 	context = {'contact_descript': contact_descript,
 		'contact_data': contact_data, 'client_form': client_form}
+	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>2')	
 	if request.method == 'POST':
+		print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>3')
 		msg = MIMEMultipart()
 		message = request.POST.get('message')
 		from_email = 'Od:' + ' ' + request.POST.get('name')	
@@ -292,10 +296,29 @@ def contact(request):
 		server.login('korbex21@gmail.com', 'J(ek*NyV$fc)Mi3brKJS')
 		server.sendmail(from_email, to_email, msg.as_string())
 		server.quit()
-		return redirect('contact_page')
+		return redirect('contactURL')
+	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>4')
 	return render(request, 'photographer/kontakt.html', context)
 
 
-# def contact_description(request):
+class CreateDescription(CreateView):
+	model = ContactDescription
+	form_class = ContactDescriptionForm
+	template_name = 'photographer/contact-description.html'	
+	success_url = reverse_lazy('contactURL')
 
 
+class EditDescription(UpdateView):
+	model = ContactDescription
+	form_class = ContactDescriptionForm	
+	template_name = 'photographer/contact-description.html'
+	success_url = reverse_lazy('contactURL')
+
+
+class DeleteDescription(DeleteView):
+    model = ContactDescription
+    success_url = reverse_lazy('contactURL')
+
+    # I'm overriding the get() method to disable coonfirmation of deleting
+    def get(self, request, *args, **kwargs):	 
+        return self.post(request, *args, **kwargs)

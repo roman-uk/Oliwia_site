@@ -1,0 +1,51 @@
+{% extends "./index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<head>	 
+	<style>
+		#contact {
+				font-weight: bold;
+	    		font-size: 20px;
+	    		margin: 25px 33px;
+			}
+		/*<!-- facebok and intagramm links in bottom page -->*/
+		.face-inst{display: none;}		
+	</style>
+</head>
+
+
+<body>	
+	<div class="main-column">
+		<h3>Dodatkowa informacja w gorze stronki "Kontakt". Zdjęcie, tytuł lub jakiś tekst.</h3>
+		
+		<form enctype="multipart/form-data" method="POST">
+		{% csrf_token %}
+
+		<table class="description">
+			<tr>
+				<td><h3>Tytul</h3></td>
+				<td>{{form.contact_title}}</td>
+			</tr>			
+			<tr>
+				<td><h3>Foto</h3></td>
+				<td>{{form.contact_photo}}</td>			
+			</tr>
+			<tr>
+				<td><h3>Text</h3></td>		
+				<td>{{form.contact_text}}</td>			
+			</tr>			
+		</table>
+
+			<input type="submit" value="Zapisz">
+
+		</form>
+
+	</div>
+
+
+
+</body>
+{% endblock %}

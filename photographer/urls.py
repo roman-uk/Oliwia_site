@@ -18,5 +18,8 @@ urlpatterns = [
 	path('blog/delete-part-article', views.del_part_article, name='del_part_articleURL'),
 	path('blog/top-article', views.top_article, name='top_articleURL'),
 	path('blog/delete-top-article', views.delete_top_article, name='delete_top_articleURL'),
-	path('contact', views.contact, name='contact_page'),			
+	path('contact', views.contact, name='contactURL'),
+	path('contact/create-description', views.CreateDescription.as_view(), name='create_descriptionURL'),
+	path('contact/edit-description/<int:pk>', views.EditDescription.as_view(), name='edit_descriptionURL'),
+	path('contact/delete-description/<int:pk>', views.DeleteDescription.as_view(), name='delete_descriptionURL'),			
 ]

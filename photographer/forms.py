@@ -58,12 +58,13 @@ class AddBodyForm(ArticleBodyForm):
 
 # 			contact
 class ContactDescriptionForm(forms.ModelForm):
+	contact_text = forms.CharField(widget=forms.Textarea(attrs={'cols': 80, 'rows':15}))
 	class Meta:
 		model = ContactDescription
 		fields = '__all__'
 
 
-class ContactDataForm(forms.ModelForm):
+class ContactDataForm(forms.ModelForm):	
 	class Meta:
 		model = ContactData
 		fields = '__all__'

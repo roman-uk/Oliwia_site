@@ -3,9 +3,13 @@
 
 
 {% block content %}
-<head>
-	<link rel="stylesheet" href="{% static 'photographer/css/style.css'%}"> 
+<head>	
 	<style>
+		#contact {
+			font-weight: bold;
+    		font-size: 20px;
+    		margin: 25px 33px;
+		}
 		/*<!-- facebok and intagramm links in bottom page -->*/
 		.face-inst{
 			display: none;
@@ -17,20 +21,52 @@
 <div class="main-column">
 
 
+
+	<!-- contact_description -->
+
 		<div class="oliwia">
-			<img style="width: 300px" src="{{contact_descript.0.imageUrl}}">
+			
+			<div class="oliwia-title"> 
+				{% if not contact_descript %}
+					<a href="{% url 'create_descriptionURL' %}">Dodaj artykuł</a>
+				{% endif %}
+
+			
+				
+				{% for contact in contact_descript %}
 			<div class="oliwia-title">
-			<span>{{contact_descript.0.contact_title}}</span>
+
+				<!-- IMAGE -->
+				<img style="width: 300px" src="{{contact.imageUrl}}">
+
+					<!-- TITLE -->
+				<span>{{contact.contact_title}}
+					<!--##### DROP DOWN MENU CRUD description####-->
+						<div class="dropdown">
+				            <h4 style="margin: 0;" class="drop-plus">
+				            <b>&#128161; </b></h4>
+				            <div class="dropdown-content drop-menu">				            	
+				                <a href="{% url 'edit_descriptionURL' contact.id %}">Redagować</a>
+				                <a href="{% url 'delete_descriptionURL' contact.id %}" onclick="return confirm('Usunąć cały artykuł:  <<{{contact.contact_title}}>>?');">Usunąć</a>
+				            </div>
+				        </div>
+				    <!--###### END drop down menu ########-->
+				</span>
 			</div>
-			<h4 class="oliwia-text">
-			{{contact_descript.0.contact_text}} 
+
+					<!-- TEXT -->
+				<h4 class="oliwia-text">
+			{{contact.contact_text}} 
 			</h4>
+				{% endfor %}
 		</div>
+
+	<!-- end contact_descript -->
+
 
 		<!-- GOOGLE MAPS-->
 	<div class="localization">
-	<h2 style="font-size: 32px;">Lokalizacja- Bydgoszcz</h2>
-	
+	<h2 style="font-size: 32px;">Lokalizacja- Bydgoszcz</h2>	
 		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d64405.04108311301!2d17.997428121558443!3d53.13771901421913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47031386764ebd6f%3A0xe49ee48c4b65f30e!2sBydgoszcz!5e0!3m2!1sen!2spl!4v1619815979709!5m2!1sen!2spl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
 	
@@ -38,8 +74,8 @@
 
 	{% for item in contact_data %}
 		<h2>Nr tel: {{item.telephone}}</h2>
-		<a href="{{item.facebook_link}}" target="_blank"><img src="{% static 'photographer/images/face.webp' %}"></a>
-		<a href="{{item.instagram_link}}" target="_blank"><img src="{% static 'photographer/images/insta.webp' %}"></a>
+<!-- 		<a href="{{item.facebook_link}}" target="_blank"></a>
+		<a href="{{item.instagram_link}}" target="_blank"><img src="{% static 'photographer/images/insta.webp' %}"></a> -->
 		<p><b>E-mail:</b> {{item.email}}</p>
 		<p><b>Facebook:</b> {{item.facebook_name}}</p>
 		<a href="{{item.facebook_link}}">{{item.facebook_link}}</a><br>
@@ -48,7 +84,7 @@
 	{% endfor %}
 
 
-	<form method='post' action="{% url 'contact_page'%}">
+	<form method='post' action="{% url 'contactURL'%}">
 		{% csrf_token %}
 		<div id="contact-data">
 			<span class='contact-name'>{{client_form.name}}</span>	
