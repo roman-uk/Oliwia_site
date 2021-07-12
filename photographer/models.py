@@ -112,23 +112,17 @@ class ContactDescription(models.Model):
 		return im
 
 
+
+
+
+
 class ContactData(models.Model):
-	normal label = models.CharField(null=True, blank=True, max_length=50)	
-	link label = models.CharField(null=True, blank=True, max_length=55)
-	link address = models.URLField(null=True, blank=True)
-	
+	telephone = models.CharField(null=True, blank=True, max_length=15)
+	email = models.EmailField(max_length=50, null=True, blank=True)
+	facebook_name = models.CharField(null=True, blank=True, max_length=55)
+	facebook_link = models.URLField(null=True, blank=True)
+	instagram_name = models.CharField(null=True, blank=True, max_length=55)
+	instagram_link = models.URLField(null=True, blank=True)
+
 	def __str__(self):
 		return self.email
-
-
-
-# class ContactData(models.Model):
-# 	telephone = models.CharField(null=True, blank=True, max_length=15)
-# 	email = models.EmailField(max_length=50, null=True, blank=True)
-# 	facebook_name = models.CharField(null=True, blank=True, max_length=55)
-# 	facebook_link = models.URLField(null=True, blank=True)
-# 	instagram_name = models.CharField(null=True, blank=True, max_length=55)
-# 	instagram_link = models.URLField(null=True, blank=True)
-
-# 	def __str__(self):
-# 		return self.email
