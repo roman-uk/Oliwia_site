@@ -64,22 +64,28 @@ class ContactDescriptionForm(forms.ModelForm):
 		fields = '__all__'
 
 
-class ContactDataForm(forms.ModelForm):	
+class ContactDataForm(forms.ModelForm):		
+	normal_text = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': 50,}))
+	link_label = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': 50, 
+		'placeholder': 'napis co zobaczą klijenci',}))
+	link_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'size': 50, 
+		'placeholder': 'adres, do którego link przeprowadzi',}))
+
 	class Meta:
 		model = ContactData
 		fields = '__all__'
 
 
 class ClientForm(forms.Form):
-	name = forms.CharField(widget=forms.TextInput(attrs={
+	name = forms.CharField(required=False, widget=forms.TextInput(attrs={
 		'placeholder': 'Imie',
 		'class': 'contact-name'
 		}))
-	email = forms.EmailField(widget=forms.TextInput(attrs={
+	email = forms.EmailField(required=False, widget=forms.TextInput(attrs={
 		'placeholder': 'E-mail',
 		'class': 'contact-email'
 		}))
-	subject = forms.CharField(widget=forms.TextInput(attrs={
+	subject = forms.CharField(required=False, widget=forms.TextInput(attrs={
 		'placeholder': 'Wpisz temat wiadomosci',
 		'class': 'contact-subject'
 		}))
@@ -89,4 +95,7 @@ class ClientForm(forms.Form):
 		}))
 
 
-
+# the form for specifying (by the owner) the email address to which 
+# 			feedback messages from the site will be sent
+class MessageForm(forms.Form):	
+	email = forms.EmailField()

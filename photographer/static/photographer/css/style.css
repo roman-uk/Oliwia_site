@@ -118,6 +118,7 @@ html, html a {
     padding: 2px;
     text-decoration: none;
     display: block;
+    font-size: 18px;
 }
 .dropdown-content a:hover{
     background-color: #B2BABB;
@@ -312,4 +313,9 @@ nav a{
     margin: 3px 0;
 }
 
-
+#receiver{
+    width: 120%;    
+    border: 3px solid black; 
+    padding: 20px;
+    border-radius: 5px;
+}

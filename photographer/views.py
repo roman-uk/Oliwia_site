@@ -3,13 +3,15 @@ from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.http import HttpResponseNotFound
-
-# h: oliwia 	p: roman
+from django.http import HttpResponseNotFound, HttpResponse
+import json
 
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.header import Header
+
+from .config_email import *
 
 
 
@@ -260,7 +262,6 @@ def del_part_article(request):
 		if article.art_text == '':
 			article.delete()
 			return redirect('blogURL')	
-	article.save()
 	return redirect('blogURL')
 
 
@@ -273,34 +274,52 @@ def delete_article(request):
 	
 
 # >>>>>>>>>>>>>>>>> kontakt page <<<<<<<<<<<<<<<<<
-def contact(request):
-	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>1')
-	contact_descript = ContactDescription.objects.all()
+
+# render contact page
+def contact(request):	
+	contact_descript = ContactDescription.objects.all()	
 	contact_data = ContactData.objects.all()
 	client_form = ClientForm()
+	message_form = MessageForm()
 	context = {'contact_descript': contact_descript,
-		'contact_data': contact_data, 'client_form': client_form}
-	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>2')	
+		'contact_data': contact_data, 'client_form': client_form, 'message_form': message_form}	
+		# submit message from contact form to owner site's email 
 	if request.method == 'POST':
-		print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>3')
-		msg = MIMEMultipart()
-		message = request.POST.get('message')
-		from_email = 'Od:' + ' ' + request.POST.get('name')	
-		html = '<html><head><h2>' + from_email + '</h2></head><body><p>' + message + '</p></body></html>'
-		to_email = 'korbex21@gmail.com'			
-		msg['Subject'] = request.POST.get('subject')		
-		msg['To'] = request.POST.get('email')			
-		msg.attach(MIMEText(html, 'html'))
-		server = smtplib.SMTP('smtp.gmail.com: 587')
-		server.starttls()
-		server.login('korbex21@gmail.com', 'J(ek*NyV$fc)Mi3brKJS')
-		server.sendmail(from_email, to_email, msg.as_string())
-		server.quit()
-		return redirect('contactURL')
-	print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>4')
+		try:
+			# receiver_message.json -file with owner site's email 
+			# message - message sent from the contact form 
+			# server - email which sends message to owner's site email
+			# importing the login and password from another file
+			with open('receiver_message.json', 'r') as email: 
+				receiver = json.load(email)
+				email.close()
+			message = request.POST.get('message')
+			subject = request.POST.get('subject')
+			from_email = 'Od:' + ' ' + request.POST.get('name')
+			to_answer = request.POST.get('email')
+			msg = MIMEMultipart()
+			msg['From'] = login
+			msg['To'] = receiver		
+			msg.add_header('reply-to', to_answer)			
+			server = smtplib.SMTP_SSL('smtp.rambler.ru: 465')
+			server.login(login, password)		
+			html_body = '<html><head><h2>' + from_email + '</h2></head><body><p>' \
+				+ message + '</p>\n\n Zwrotny adress: '+' &ensp; ' + to_answer+ '</body></html> '
+			msg = MIMEText(html_body, 'html', 'utf-8')
+			msg['Subject'] = Header(subject, 'utf-8')		
+			server.sendmail(login, receiver, msg.as_string())		
+			server.quit()
+			done = '<hmml><body><h1>Twoja wiadomość została wysłana.</h1>\n \
+				<h2><a href=%s>Powrót</h2></body></html>' % reverse_lazy('contactURL')
+			return HttpResponse(done)
+				# if isn't possible to do this 
+		except:
+			return HttpResponseNotFound('<h1> Coś poszło nie tak,\
+			 spróbuj ponownie lub użyj innego sposobu, aby się ze mną skontaktować </h1>')	
 	return render(request, 'photographer/kontakt.html', context)
 
 
+# create a description or additional information at the top of the page
 class CreateDescription(CreateView):
 	model = ContactDescription
 	form_class = ContactDescriptionForm
@@ -308,6 +327,7 @@ class CreateDescription(CreateView):
 	success_url = reverse_lazy('contactURL')
 
 
+# edit a description at the top of the page
 class EditDescription(UpdateView):
 	model = ContactDescription
 	form_class = ContactDescriptionForm	
@@ -315,6 +335,7 @@ class EditDescription(UpdateView):
 	success_url = reverse_lazy('contactURL')
 
 
+# delete a description at the top of the page
 class DeleteDescription(DeleteView):
     model = ContactDescription
     success_url = reverse_lazy('contactURL')
@@ -322,3 +343,50 @@ class DeleteDescription(DeleteView):
     # I'm overriding the get() method to disable coonfirmation of deleting
     def get(self, request, *args, **kwargs):	 
         return self.post(request, *args, **kwargs)
+
+
+# creating or editing the contact information such as: telphone, email, facebook etc.
+def contact_data(request):
+	pk= request.GET.get('pk', '')     # id of the contact data to edit
+	field = request.GET.get('field')  # the field that will be change
+	if request.method == 'GET':
+		try:			
+				# submit a form for editing a contact details
+			data = ContactData.objects.get(id=pk)
+			form = ContactDataForm(initial={'normal_text': data.normal_text, 
+				'link_label': data.link_label, 'link_address': data.link_address})						
+		except:	
+				# submit a form for adding new contact details		
+			form = ContactDataForm()
+		context = {'form': form, 'field': field, 'pk': pk}
+		return render(request, 'photographer/contact-data.html', context)
+	if request.method == 'POST':
+		try:
+				#try edit contact details
+			old_data = ContactData.objects.get(id=pk)
+			data = ContactDataForm(request.POST, instance=old_data)
+		except:
+				# add new contact details
+			data = ContactDataForm(request.POST)
+		if data.is_valid:
+			data.save()
+		else:
+			return HttpResponseNotFound('<h1> Nieprawidłowo wypełnione </h1>')
+		return redirect('contactURL')
+
+
+# delete the contact information 
+def delete_contact_data(request):
+	pk= request.GET.get('pk')	# id of the contact data to delete
+	data = ContactData.objects.get(id=pk)
+	data.delete()
+	return redirect('contactURL')
+
+
+# email address for receiving messages from a completed form on the site.
+def receiver_message(request):
+	receiver = request.POST.get('email')	
+	with open('receiver_message.json', 'w') as email:
+		json.dump(receiver, email)
+		email.close()
+	return redirect('contactURL')

@@ -1,0 +1,63 @@
+{% extends "./index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<head>	 
+	<style>
+		#contact {
+				font-weight: bold;
+	    		font-size: 20px;
+	    		margin: 25px 33px;
+			}
+		/*<!-- facebok and intagramm links in bottom page -->*/
+		.face-inst{display: none;}	
+		tr, h2 {
+			display: none;
+		}
+		.{{field}}{
+			display: block;
+		}
+	</style>
+</head>
+
+
+<body>	
+	<div class="main-column">
+		
+		<h2 class="text">Podaj dane kontaktowe: imie, email, numer telefonu, adres itd.</h2>
+
+		<h2 class="link">Podaj dane kontaktowe: link do strony internetowej lub mediów społecznościowych itp.</h2>
+	
+		
+		<form method="POST" action="{% url 'contact_dataURL' %}?pk={{pk}}">
+		{% csrf_token %}
+
+		<table class="description">							
+			<tr class="text">
+				<!-- normal text -->
+				<td><h3>Zwykly text</h3></td>
+				<td>{{form.normal_text}}</td>
+			</tr>			
+			<tr class="link">
+				<!-- ordinary text, link name -->
+				<td><h3>Nazwa linku</h3></td>
+				<td>{{form.link_label}}</td>			
+			</tr>
+			<tr class="link">
+				<td><h3>Adresa linku</h3></td>		
+				<td>{{form.link_address}}</td>			
+			</tr>			
+		</table>
+
+			<input type="submit" value="Zapisz">
+
+		</form>
+
+	</div>
+
+
+
+</body>
+{% endblock %}

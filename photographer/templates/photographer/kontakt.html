@@ -22,29 +22,31 @@
 
 
 
-	<!-- contact_description -->
+<!----------------------- contact page description-->
 
 		<div class="oliwia">
-			
+
+			<!------ add description page -->
 			<div class="oliwia-title"> 
 				{% if not contact_descript %}
 					<a href="{% url 'create_descriptionURL' %}">Dodaj artykuł</a>
-				{% endif %}
+				{% endif %}			
+			</div>	
+			<!-- end add description -->
 
-			
-				
+
 				{% for contact in contact_descript %}
 			<div class="oliwia-title">
 
-				<!-- IMAGE -->
+	<!-------- IMAGE -->
 				<img style="width: 300px" src="{{contact.imageUrl}}">
 
-					<!-- TITLE -->
+	<!-- -----------TITLE -->
 				<span>{{contact.contact_title}}
 					<!--##### DROP DOWN MENU CRUD description####-->
 						<div class="dropdown">
 				            <h4 style="margin: 0;" class="drop-plus">
-				            <b>&#128161; </b></h4>
+				            <b>&#128397;</b></h4>
 				            <div class="dropdown-content drop-menu">				            	
 				                <a href="{% url 'edit_descriptionURL' contact.id %}">Redagować</a>
 				                <a href="{% url 'delete_descriptionURL' contact.id %}" onclick="return confirm('Usunąć cały artykuł:  <<{{contact.contact_title}}>>?');">Usunąć</a>
@@ -54,36 +56,106 @@
 				</span>
 			</div>
 
-					<!-- TEXT -->
+	<!-------- TEXT -->
 				<h4 class="oliwia-text">
 			{{contact.contact_text}} 
 			</h4>
 				{% endfor %}
 		</div>
+<!----------------------- end contact_descript -->
 
-	<!-- end contact_descript -->
 
 
-		<!-- GOOGLE MAPS-->
+<!-------------------- GOOGLE MAPS-->
+
 	<div class="localization">
 	<h2 style="font-size: 32px;">Lokalizacja- Bydgoszcz</h2>	
 		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d64405.04108311301!2d17.997428121558443!3d53.13771901421913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47031386764ebd6f%3A0xe49ee48c4b65f30e!2sBydgoszcz!5e0!3m2!1sen!2spl!4v1619815979709!5m2!1sen!2spl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+	</div>
+<!---------------------- end GOOGLE MAPS -->
 
-	
-	<h2>Skontaktuj się ze mną</h2>
+
+
+<!------------------------- Contact Data -->
+
+	<!-- Add Contact Data  -->
+
+		<h2>Skontaktuj się ze mną
+						<!--##### DROP DOWN MENU add kontakt ####-->
+					<div class="dropdown">
+			            <h4 style="margin: 0;" class="drop-plus"><b>&#x271A;</b></h4>
+			            <div class="dropdown-content drop-menu">	           	
+			                <a href="{% url 'contact_dataURL' %}?field=text">Dodaj kontakt</a>	           
+			               <a href="{% url 'contact_dataURL' %}?field=link">Dodaj link</a>
+			            </div>
+			        </div>
+				<!--###### END drop down menu ########-->
+		</h2>
+	<!-- end add contact data -->
+
+
+	<!-- displaying contact data -->
 
 	{% for item in contact_data %}
-		<h2>Nr tel: {{item.telephone}}</h2>
-<!-- 		<a href="{{item.facebook_link}}" target="_blank"></a>
-		<a href="{{item.instagram_link}}" target="_blank"><img src="{% static 'photographer/images/insta.webp' %}"></a> -->
-		<p><b>E-mail:</b> {{item.email}}</p>
-		<p><b>Facebook:</b> {{item.facebook_name}}</p>
-		<a href="{{item.facebook_link}}">{{item.facebook_link}}</a><br>
-		<p><b>Instagram:</b> {{item.instagram_name}}</p>
-		<a href="{{item.instagram_link}}">{{item.instagram_link}}</a>
+
+		<!-- TEXT contact data. for example: phone number, name, address, etc.  -->
+		{% if item.normal_text != '' %}
+		  <h3>{{item.normal_text}}
+			<!--##### DROP DOWN MENU edit and delit text label ####-->
+				<div class="dropdown">
+		          	<h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
+		            <div class="dropdown-content drop-menu">	           	
+		              <a href="{% url 'contact_dataURL' %}?pk={{item.id}}&field=text">Redagować</a>	                 
+		              <a href="{% url 'delete_contact_dataURL' %}?pk={{item.id}}" onclick="return confirm('Usunąć : {{item.normal_text}}  {{item.link_label}}?');">Usunąć</a>
+		            </div>
+		        </div>
+			<!--###### END drop down menu ########-->		
+		  </h3>
+		{% endif %}
+		<!-- end text contact information -->
+
+		<!-- LINK. contact data such as facebook, instagram etc -->
+		{% if item.link_label != '' %}
+		<span><a href="{{item.link_address}}" target="_blank"><b>{{item.link_label}}</b></a>
+			<!--##### DROP DOWN MENU edit and delit link ####-->
+				<div class="dropdown">
+		            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
+		            <div class="dropdown-content drop-menu">	           	
+		                <a href="{% url 'contact_dataURL' %}?pk={{item.id}}&field=link">Redagować</a>	                 
+		                <a href="{% url 'delete_contact_dataURL' %}?pk={{item.id}}" onclick="return confirm('Usunąć :  {{item.link_label}}  {{item.normal_text}}?');">Usunąć</a>
+		            </div>
+		        </div>
+			<!--###### END drop down menu ########-->
+		</span>
+		{% endif %}
+		<!-- end link -->
+
 	{% endfor %}
+<!-------------------------- end Contact Data -->
 
 
+<!-------------------------- CONTACT me form -->
+
+	<!-- A POP-UP window for assigning an email address to which messages from the contact form will be sent.  -->
+		<div style="margin: 30px;">
+			<!--##### DROP window for change receiver message ####-->
+				<div  class="dropdown">
+		            <h2 style="margin: 0;" class="drop-plus"><b>adres do wiadomości &#9997;</b></h2>
+		            <div id="receiver" class="dropdown-content drop-menu">	           	
+		              <h3>Wpisz adres e-mail na który będziesz dostawać wiadomości z formularza kontaktowego</h3>
+		              	<form method='post' action="{% url 'receiver_message_URL'%}">
+							{% csrf_token %}							
+							  {{message_form.email}}			
+							  <input type="submit" value="Wyszli">
+						</form>
+		            </div>
+		        </div>
+			<!--###### END drop down menu ########-->
+		</div>
+	<!-- end assigning an email -->
+
+	<!--contact FORM -->
+	</h3> 
 	<form method='post' action="{% url 'contactURL'%}">
 		{% csrf_token %}
 		<div id="contact-data">
@@ -99,5 +171,9 @@
 		</div>
 			<input id="contact-submit" type="submit" value="Wyszli">
 	</form>
+	<!-- end form -->
 
+<!-- ------End Contact Me Form -->
+
+</div>
 {% endblock %}
