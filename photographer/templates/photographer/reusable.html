@@ -18,7 +18,9 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 		{% for item in description %}
 			<h3>{{item.title}} </h3>		 
 		{% endfor %}
+
 	<!--##### DROP DOWN MENU CRUD description page ####-->
+		{% if request.user.is_authenticated %}
         <div class="dropdown">
             <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
             <div class="dropdown-content drop-menu">
@@ -27,6 +29,7 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
                 <a href="{% url 'delete_description_reusable_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}" onclick="return confirm('Usunąć ?');">Usunąć</a>
             </div>
         </div>
+        {% endif %}
     <!--###### END drop down menu ########-->
 	</div>   
 	{% for item in description %}		  <!--CONTENT -->
@@ -46,9 +49,11 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 
 
 <!------------ Three columns with photos -->
+		{% if request.user.is_authenticated %}
 	<h3><a href="{% url 'add_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}">Dodaj photo</a></h3>
-	<div class="photo-container"> 
+		{% endif %}
 
+	<div class="photo-container"> 
 		{% for col in columns %}
 			<div class="photo-column"> 
 			{% for item in photos %}				
@@ -57,6 +62,7 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 					<img src="{{item.photo.url}}">
 					
 						<!--##### DROP DOWN MENU CRUD photo ####-->
+							{% if request.user.is_authenticated %}
 					<div class="dropdown" style="position: absolute;">
 			            <h3 class="drop-plus"><b> &#128397;&#65039;</b></h3>
 			            <div class="dropdown-content drop-menu">				            	
@@ -64,6 +70,7 @@ This is a html template for tabs: "start", "Okolicznościowe", "Ciążowe, dziec
 			                <a href="{% url 'delete_photo_page' %}?tab={{navbar_active}}&full_name={{full_name_tab}}&pk={{item.id}}" onclick="return confirm('Usunąć {{item.photo.name}}?');">Usunąć</a>
 			            </div>
 			        </div>
+			        		{% endif %}
 			        	<!--###### END drop down menu ########-->
     			</div>						
 				{% endif %}				

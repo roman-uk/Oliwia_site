@@ -1,5 +1,28 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
+from django.contrib.auth.models import User
+
+
+	
+#        Login Form
+class LoginForm(AuthenticationForm, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+
+
+# Change password Form
+class UpdatePasswordForm(PasswordChangeForm, SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        #  rewrite error message
+        self.error_messages['password_incorrect'] = "Twoje stare hasło zostało wprowadzone nieprawidłowo. Proszę wprowadzić ponownie."
+        self.error_messages['password_mismatch'] = "Dwa pola hasła nie pasowały"
+        self.fields["old_password"].label = "Stare hasło"
+        self.fields["new_password1"].label = "Nowe hasło"
+        self.fields["new_password2"].label = "Powtórz nowe hasło"
 
 
 		# reusable

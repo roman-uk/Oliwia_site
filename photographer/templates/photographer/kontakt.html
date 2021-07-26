@@ -20,18 +20,18 @@
 
 <div class="main-column">
 
-
-
 <!----------------------- contact page description-->
 
 		<div class="oliwia">
 
 			<!------ add description page -->
+			{% if user.is_authenticated %}
 			<div class="oliwia-title"> 
 				{% if not contact_descript %}
 					<a href="{% url 'create_descriptionURL' %}">Dodaj artykuł</a>
 				{% endif %}			
 			</div>	
+			{% endif %}
 			<!-- end add description -->
 
 
@@ -44,6 +44,7 @@
 	<!-- -----------TITLE -->
 				<span>{{contact.contact_title}}
 					<!--##### DROP DOWN MENU CRUD description####-->
+					{% if user.is_authenticated %}
 						<div class="dropdown">
 				            <h4 style="margin: 0;" class="drop-plus">
 				            <b>&#128397;</b></h4>
@@ -52,6 +53,7 @@
 				                <a href="{% url 'delete_descriptionURL' contact.id %}" onclick="return confirm('Usunąć cały artykuł:  <<{{contact.contact_title}}>>?');">Usunąć</a>
 				            </div>
 				        </div>
+				    {% endif %}
 				    <!--###### END drop down menu ########-->
 				</span>
 			</div>
@@ -82,6 +84,7 @@
 
 		<h2>Skontaktuj się ze mną
 						<!--##### DROP DOWN MENU add kontakt ####-->
+						{% if user.is_authenticated %}
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b>&#x271A;</b></h4>
 			            <div class="dropdown-content drop-menu">	           	
@@ -89,6 +92,7 @@
 			               <a href="{% url 'contact_dataURL' %}?field=link">Dodaj link</a>
 			            </div>
 			        </div>
+			        	{% endif %}
 				<!--###### END drop down menu ########-->
 		</h2>
 	<!-- end add contact data -->
@@ -102,6 +106,7 @@
 		{% if item.normal_text != '' %}
 		  <h3>{{item.normal_text}}
 			<!--##### DROP DOWN MENU edit and delit text label ####-->
+					{% if user.is_authenticated %}
 				<div class="dropdown">
 		          	<h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 		            <div class="dropdown-content drop-menu">	           	
@@ -109,6 +114,7 @@
 		              <a href="{% url 'delete_contact_dataURL' %}?pk={{item.id}}" onclick="return confirm('Usunąć : {{item.normal_text}}  {{item.link_label}}?');">Usunąć</a>
 		            </div>
 		        </div>
+		    		{% endif %}
 			<!--###### END drop down menu ########-->		
 		  </h3>
 		{% endif %}
@@ -118,6 +124,7 @@
 		{% if item.link_label != '' %}
 		<span><a href="{{item.link_address}}" target="_blank"><b>{{item.link_label}}</b></a>
 			<!--##### DROP DOWN MENU edit and delit link ####-->
+			{% if user.is_authenticated %}
 				<div class="dropdown">
 		            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 		            <div class="dropdown-content drop-menu">	           	
@@ -125,6 +132,7 @@
 		                <a href="{% url 'delete_contact_dataURL' %}?pk={{item.id}}" onclick="return confirm('Usunąć :  {{item.link_label}}  {{item.normal_text}}?');">Usunąć</a>
 		            </div>
 		        </div>
+		    {% endif %}
 			<!--###### END drop down menu ########-->
 		</span>
 		{% endif %}
@@ -139,6 +147,7 @@
 	<!-- A POP-UP window for assigning an email address to which messages from the contact form will be sent.  -->
 		<div style="margin: 30px;">
 			<!--##### DROP window for change receiver message ####-->
+			{% if user.is_authenticated %}
 				<div  class="dropdown">
 		            <h2 style="margin: 0;" class="drop-plus"><b>adres do wiadomości &#9997;</b></h2>
 		            <div id="receiver" class="dropdown-content drop-menu">	           	
@@ -150,6 +159,7 @@
 						</form>
 		            </div>
 		        </div>
+		    {% endif %}
 			<!--###### END drop down menu ########-->
 		</div>
 	<!-- end assigning an email -->

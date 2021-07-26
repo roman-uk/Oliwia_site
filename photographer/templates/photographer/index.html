@@ -19,29 +19,36 @@
 <body>	
 <div class="head">
 
-		<div style="text-align: center">			
+	<div style="text-align: center">
+	  {% if request.user.is_authenticated %}
+		<a href="{% url 'change_passwordURL' %}" class="login">Zmień hasło</a>
+        <a style="margin-top: 2%" class="login" href="{% url 'logoutURL' %}">Wyloguj się</a>
+      {% else %}
+		<h2><a href="{% url 'loginURL' %}" class="login">&#128477;</a></h2>
+	  {% endif %}			
             <h1 id="title"><a href="{% url 'reusable_page' 'start' 'Fotograf Bydgoszcz' %}">OLIWIA BRZYKCY</a></h1>
+
             
 
 			<h3>F O T O G R A F I A</h3>
 		</div>
 			
-			<nav>
+	<nav>
 <!-- id-for the style of the active tab -->
 <!-- to open a new page, we provide the link with: 
-						'reusable_page' template url, 
-						'portrety' - the name of the active tab,
-				 		'Sesje portretowe i wizerunkowe' - full page name -->
-				<a style="margin-left: 0" id="portrety" href="{%url 'reusable_page' 'portrety' 'Sesje portretowe i wizerunkowe' %}">Portrety, wizerunkowe
-				</a>
-				<a id="okolicznosciowe" href="{% url 'reusable_page' 'okolicznosciowe' 'Okolicznościowe' %}">Okolicznościowe
-				</a>
-				<a id="rodzinne" href="{% url 'reusable_page' 'rodzinne' 'Ciążowe, dziecięce, rodzinne' %}">Ciążowe, dziecięce, rodzinne</a>
-				<a id="sensualne" href="{% url 'reusable_page' 'sensualne' 'Sensualne' %}">Sensualne</a>
-				<a id="wiecej" href="{% url 'reusable_page' 'wiecej' 'Fotografia w wolnym czasie' %}">Więcej prac</a>
-				<a id="blog" href="{% url 'blogURL' %}">Blog</a>				
-				<a id="contact" href="{% url 'contactURL' %}">Kontakt</a>			
-			</nav>	
+				'reusable_page' - template url, 
+				'portrety' - the name of the active tab,
+		 		'Sesje portretowe i wizerunkowe' - full page name -->
+		<a style="margin-left: 0" id="portrety" href="{%url 'reusable_page' 'portrety' 'Sesje portretowe i wizerunkowe' %}">Portrety, wizerunkowe
+		</a>
+		<a id="okolicznosciowe" href="{% url 'reusable_page' 'okolicznosciowe' 'Okolicznościowe' %}">Okolicznościowe
+		</a>
+		<a id="rodzinne" href="{% url 'reusable_page' 'rodzinne' 'Ciążowe, dziecięce, rodzinne' %}">Ciążowe, dziecięce, rodzinne</a>
+		<a id="sensualne" href="{% url 'reusable_page' 'sensualne' 'Sensualne' %}">Sensualne</a>
+		<a id="wiecej" href="{% url 'reusable_page' 'wiecej' 'Fotografia w wolnym czasie' %}">Więcej prac</a>
+		<a id="blog" href="{% url 'blogURL' %}">Blog</a>				
+		<a id="contact" href="{% url 'contactURL' %}">Kontakt</a>			
+	</nav>	
 
 </div>
 

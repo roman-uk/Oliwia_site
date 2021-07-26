@@ -5,15 +5,38 @@ from .forms import *
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseNotFound, HttpResponse
 import json
-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
-
 from .config_email import *
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 
+#  >>>>>>>>>>>>>>>> LOGIN<<<<<<<<<<<<<<<
+#   Login/Logout
+class ServiceLogin(LoginView):
+    template_name = 'photographer/login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('start_page')
+
+    def get_success_url(self):
+        return self.success_url
+
+
+class ServiceLogout(LogoutView):
+    next_page = reverse_lazy('start_page')
+
+
+# Change password
+class UpdatePassword(LoginRequiredMixin, PasswordChangeView):
+    form_class = UpdatePasswordForm
+    success_url = reverse_lazy('start_page')
+    template_name = 'photographer/change-password.html'
 
 
 """ >>>>>>>>>>>> for reusable pages: 'start', 'portrety', 'okolicznosciowe', 
@@ -43,6 +66,7 @@ def reusable(request, tab='', full_name=''):
 	
 
 # function for adding and editing description on reusable page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def description_reusable(request):
 	tab = request.GET.get('tab', '')
 	full_name = request.GET.get('full_name', '')	
@@ -68,6 +92,7 @@ def description_reusable(request):
 
 
 # function for delete description reusable on page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def delete_description_reusable(request):	
 	tab = request.GET.get('tab')
 	full_name = request.GET.get('full_name')	
@@ -77,6 +102,7 @@ def delete_description_reusable(request):
 
 
 # function for adding photo on reusable page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def add_photo(request):
 	tab = request.GET.get('tab')
 	full_name = request.GET.get('full_name')	
@@ -94,6 +120,7 @@ def add_photo(request):
 
 
 # function for editing photo on reusable page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def edit_photo(request):
 	tab = request.GET.get('tab')
 	full_name = request.GET.get('full_name')
@@ -115,6 +142,7 @@ def edit_photo(request):
 
 
 # photo deletion function on reusable page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def delete_photo(request):
 	tab = request.GET.get('tab')
 	full_name = request.GET.get('full_name')
@@ -135,6 +163,7 @@ def blog(request):
 
 
 # creating or editing an article that is attached to the top of the page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def top_article(request):	
 	pk = request.GET.get('pk', '')	# id of the article is edited
 	if request.method == "GET":		
@@ -164,6 +193,7 @@ def top_article(request):
 
 
 # delete an article that is attached to the top of the page
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def delete_top_article(request):
 	pk = request.GET.get('pk')	# id of the article is deleted
 	article = FirstArticle.objects.get(id=pk)
@@ -172,6 +202,7 @@ def delete_top_article(request):
 
 
 # adding new articles to the blog page.
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def add_article(request):
 #	--request for a form for adding an article
 	if request.method == 'GET': 	
@@ -198,6 +229,7 @@ def add_article(request):
 
 # editing an article
 	# this function uses the same template as "expand_article"
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def edit_article(request):	
 	pk= request.GET.get('pk', '') # id 
 	field = request.GET.get('field')   # the field that will change (title or image or text)	
@@ -229,6 +261,7 @@ def edit_article(request):
 
 # this function extends an existing article by adding a photo or text.
 	# the function uses the same template as "edit_article"
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def expand_article(request):
 	pk= request.GET.get('pk', '')	# id of the foreign key(art_title). article name.
 	title = ArticleTitle.objects.get(id=pk)
@@ -248,6 +281,7 @@ def expand_article(request):
 
 
 # delete part of the article(image or text)
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def del_part_article(request):
 	pk= request.GET.get('pk', '')	# id of the article from which the field will be deleted
 	field = request.GET.get('field') # the field that will delete(image or text)
@@ -265,7 +299,8 @@ def del_part_article(request):
 	return redirect('blogURL')
 
 
-# delete an article
+# deliting the entire article
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def delete_article(request):
 	pk = request.GET.get('pk')	
 	article = ArticleTitle.objects.get(id=pk)
@@ -312,7 +347,7 @@ def contact(request):
 			done = '<hmml><body><h1>Twoja wiadomość została wysłana.</h1>\n \
 				<h2><a href=%s>Powrót</h2></body></html>' % reverse_lazy('contactURL')
 			return HttpResponse(done)
-				# if isn't possible to do this 
+		# if isn't possible to do this 
 		except:
 			return HttpResponseNotFound('<h1> Coś poszło nie tak,\
 			 spróbuj ponownie lub użyj innego sposobu, aby się ze mną skontaktować </h1>')	
@@ -320,7 +355,7 @@ def contact(request):
 
 
 # create a description or additional information at the top of the page
-class CreateDescription(CreateView):
+class CreateDescription(LoginRequiredMixin, CreateView):
 	model = ContactDescription
 	form_class = ContactDescriptionForm
 	template_name = 'photographer/contact-description.html'	
@@ -328,7 +363,7 @@ class CreateDescription(CreateView):
 
 
 # edit a description at the top of the page
-class EditDescription(UpdateView):
+class EditDescription(LoginRequiredMixin, UpdateView):
 	model = ContactDescription
 	form_class = ContactDescriptionForm	
 	template_name = 'photographer/contact-description.html'
@@ -336,7 +371,7 @@ class EditDescription(UpdateView):
 
 
 # delete a description at the top of the page
-class DeleteDescription(DeleteView):
+class DeleteDescription(LoginRequiredMixin, DeleteView):
     model = ContactDescription
     success_url = reverse_lazy('contactURL')
 
@@ -346,6 +381,7 @@ class DeleteDescription(DeleteView):
 
 
 # creating or editing the contact information such as: telphone, email, facebook etc.
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def contact_data(request):
 	pk= request.GET.get('pk', '')     # id of the contact data to edit
 	field = request.GET.get('field')  # the field that will be change
@@ -376,6 +412,7 @@ def contact_data(request):
 
 
 # delete the contact information 
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def delete_contact_data(request):
 	pk= request.GET.get('pk')	# id of the contact data to delete
 	data = ContactData.objects.get(id=pk)
@@ -384,6 +421,7 @@ def delete_contact_data(request):
 
 
 # email address for receiving messages from a completed form on the site.
+@login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def receiver_message(request):
 	receiver = request.POST.get('email')	
 	with open('receiver_message.json', 'w') as email:

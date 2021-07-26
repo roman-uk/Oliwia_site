@@ -20,14 +20,18 @@
 		<h2>Blog</h2>		
 
 	<!--***** The article attached at the top of the page *****-->
+		{% if user.is_authenticated %}
 	<a href="{% url 'top_articleURL' %}">
 		<h4 style="position: absolute;">Utwórz wpis, który będzie na górze strony bloga</h4>
 	</a>
+		{% endif %}
+
 		<div class="blog-record">
 			{% for item in first_article %}
 				<div class="blog-record-title">
 					<span>{{item.art_title}}</span>
 				<!--##### DROP DOWN MENU edit and delit title ####-->
+					{% if user.is_authenticated %}
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 			            <div class="dropdown-content drop-menu">	           	
@@ -35,6 +39,7 @@
 			                <a href="{% url 'delete_top_articleURL' %}?&pk={{item.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{item.art_title}}>>?');">Usunąć</a>
 			            </div>
 			        </div>
+			        {% endif %}
 			    <!--###### END drop down menu ########-->
 				</div>
 				<div class="blog-body">
@@ -52,16 +57,17 @@
 <!--******* Other articles blog page  ********-->
 
 		<!-- The link to add new articles to the page. -->
+		{% if user.is_authenticated %}
 				<h3><a href="{% url 'add_articleURL' %}"> Dodaj artykuł</a></h3>
-	<div class="blog-record">
+		{% endif %}
 
-		
-	{% for title in art_titles %}	
-
+	<div class="blog-record">		
+	{% for title in art_titles %}
 			<!--** Title article **-->
 		<div class="blog-record-title">
 			<span>{{title.art_title}}</span>	
 				<!--##### DROP DOWN MENU edit and delit title ####-->
+				{% if user.is_authenticated %}
 					<div class="dropdown">
 			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
 			            <div class="dropdown-content drop-menu">
@@ -70,6 +76,7 @@
 			                <a href="{% url 'delete_articleURL' %}?pk={{title.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{title.art_title}}>>?');">Usunąć</a>
 			            </div>
 			        </div>
+			    {% endif %}
 			    <!--###### END drop down menu ########-->
 		</div> 
 		<!--*** end title ***-->
@@ -84,6 +91,7 @@
 <!--image>>--> 		 <img src="{{body.imageUrl}}">
 
 							<!--##### DROP DOWN MENU edit and delit "IMAGE" ####-->
+							{% if user.is_authenticated %}
 					<div class="dropdown" style="left: 20%; position: absolute;">
 			            <h4 style="margin: 2%;" class="drop-plus">
 			            	{% if body.art_photo != '' %}<!-- do not display the edit icon if the image is missing -->
@@ -95,6 +103,7 @@
 			                <a href="{% url 'del_part_articleURL' %}?pk={{body.id}}&field=image" onclick="return confirm('Usunąć {{body.art_photo.name}}?');">Usunąć</a>
 			            </div>
 			        </div>
+			        		{% endif %}
 			    		<!--###### END drop down menu "IMAGE" ########-->
 
 			    		<!-- TEXT -->
@@ -102,6 +111,7 @@
 					<h4 style="margin: 3px">
 
 						<!--##### DROP DOWN MENU edit and delit "TEXT" ####-->
+						{% if user.is_authenticated %}
 					<div class="dropdown">
 				            <h4 style="margin: 0;" class="drop-plus">
 				            	{% if body.art_text != '' %}
@@ -113,6 +123,7 @@
 			                <a href="{% url 'del_part_articleURL' %}?pk={{body.id}}&field=text" onclick="return confirm('Usunąć ten blok tekstu?');">Usunąć</a>
 			            </div>
 			        </div>
+			        {% endif %}
 			    <!--###### END drop down menu "TEXT" ########-->
 
 <!--text>>>-->		{{body.art_text}}

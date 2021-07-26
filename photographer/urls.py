@@ -24,5 +24,9 @@ urlpatterns = [
 	path('contact/delete-description/<int:pk>', views.DeleteDescription.as_view(), name='delete_descriptionURL'),	
 	path('contact/contact-data', views.contact_data, name='contact_dataURL'),
 	path('contact/delete-contact-data', views.delete_contact_data, name='delete_contact_dataURL'),	
-	path('contact/email', views.receiver_message, name='receiver_message_URL'),	
+	path('contact/email', views.receiver_message, name='receiver_message_URL'),
+	path('login', views.ServiceLogin.as_view(), name='loginURL'),
+    path('logout', views.ServiceLogout.as_view(), name='logoutURL'),
+    path('change-password', views.UpdatePassword.as_view(), name='change_passwordURL'),
 ]
+
