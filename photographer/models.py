@@ -40,6 +40,15 @@ class PhotoPortfolio(models.Model):
 	seat_number = models.CharField(max_length=40) # the place of the photo in the column.
 	site_tab = models.CharField(max_length=30, choices=site_tabs)
 
+	# Overriding the save method so that when an image is deleted or updated,
+    # the old image is deleted from the storage	
+
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_record = PhotoPortfolio.objects.get(pk=self.pk)
+			if old_record.photo != self.photo:
+				old_record.photo.delete(save=False)
+		super(PhotoPortfolio, self).save(*args, **kwargs)
 
 	def __str__(self):
 		name = self.site_tab + ' ' + self.photo.name[15:]
@@ -55,6 +64,15 @@ class FirstArticle(models.Model):
 
 	def __str__(self):
 		return self.art_title
+
+	# Overriding the save method so that when an image is deleted or updated,
+    #           the old image is deleted from the storage
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_record = FirstArticle.objects.get(pk=self.pk)
+			if old_record.art_photo != self.art_photo:
+				old_record.art_photo.delete(save=False)
+		super(FirstArticle, self).save(*args, **kwargs)
 
  # adding an imageURL method to exclude an error if the image is missing
 	@property
@@ -82,6 +100,15 @@ class ArticleBody(models.Model):
 		name = str(self.art_title) + " " + str(self.id)
 		return name
 
+	# Overriding the save method so that when an image is deleted or updated,
+    #           the old image is deleted from the storage
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_record = ArticleBody.objects.get(pk=self.pk)
+			if old_record.art_photo != self.art_photo:
+				old_record.art_photo.delete(save=False)
+		super(ArticleBody, self).save(*args, **kwargs)
+
  # adding an imageURL method to exclude an error if the image is missing
 	@property
 	def imageUrl(self):
@@ -101,6 +128,15 @@ class ContactDescription(models.Model):
 
 	def __str__(self):
 		return self.contact_title
+
+	# Overriding the save method so that when an image is deleted or updated,
+    #           the old image is deleted from the storage
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_record = ContactDescription.objects.get(pk=self.pk)
+			if old_record.contact_photo != self.contact_photo:
+				old_record.contact_photo.delete(save=False)
+		super(ContactDescription, self).save(*args, **kwargs)
 
  # adding an imageURL method to exclude an error if the image is missing
 	@property
