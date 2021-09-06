@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-*wm_8zqr)h3j-)
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['oliwia-site.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
