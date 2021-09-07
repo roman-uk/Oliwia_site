@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',   # This is necessary for displaying images with Cloudinary
+    'cloudinary',  # This is necessary for displaying images with Cloudinary
     'photographer'
 ]
 
@@ -128,10 +130,18 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dtabjdkaf',
+    'API_KEY': '494236315171716',
+    'API_SECRET': 'V2nqsRLlbAsht3iEz0-Fo_AU5q4'
+}
 django_heroku.settings(locals())
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # This is necessary for displaying images with Cloudinary
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
