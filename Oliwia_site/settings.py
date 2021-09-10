@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-*wm_8zqr)h3j-)
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'limitless-ravine-31658.herokuapp.com', 'www.oliwiafoto', 'oliwiafoto']
 
 
 # Application definition
