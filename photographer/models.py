@@ -35,7 +35,7 @@ class PhotoPortfolio(models.Model):
 		('kolumna3', 'kolumna3'),
 		)
 	photo = models.ImageField(upload_to='reusable_photo', blank=True, null=True)
-	photo_theme = models.CharField(max_length=50, blank=True, null=True, help_text='Morze być puste')	
+	photo_theme = models.CharField(max_length=50, blank=True, help_text='Morze być puste')	
 	column = models.CharField(max_length=20, choices=columns)
 	seat_number = models.CharField(max_length=40) # the place of the photo in the column.
 	site_tab = models.CharField(max_length=30, choices=site_tabs)
