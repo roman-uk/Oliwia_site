@@ -265,6 +265,14 @@ nav{
     flex-direction: row;      
     padding: 0;
     justify-content: center;
+    align-items: center;  
+    flex-wrap: wrap;   
+}
+#navbar{
+    display: flex;
+    flex-direction: row;      
+    padding: 0;
+    justify-content: center;
     align-items: center;     
 }
 nav a{
@@ -302,7 +310,7 @@ nav a{
 
 /*          P                */
 .photo-container {
-	margin: auto;
+    margin: auto;
     display: flex;
     width: 100%;
     justify-content: space-between;                   
@@ -310,10 +318,11 @@ nav a{
 .photo-column {
     display: flex;
     flex-direction: column;
-    width: 328px;  
+    width: 20.5em;  
 }
 .photo-column img{    
     margin: 3px 0;
+    
 }
 
 #receiver{
@@ -321,4 +330,39 @@ nav a{
     border: 3px solid black; 
     padding: 20px;
     border-radius: 5px;
+}
+
+@media screen and (max-width: 480px) {
+    .main-column{
+        width: 21em;
+    }
+    .photo-container{
+        flex-direction: column;
+    }
+    #title{
+    letter-spacing: 1px;    
+    margin-bottom: 5px;
+    font-size: 1.3em;
+    }
+    #enter{
+        font-size: 1.3em;
+        margin-left: 20%;
+    }
+    nav {
+        flex-wrap: wrap;
+
+    }
+    .item-a{
+        background: white;
+        border-radius: 5%;
+        margin: 1px;
+        border: 1px solid grey;
+    }
+    .face-inst{
+        width: 21em;
+    }
+    footer{
+        width: 21em;
+    }
+
 }
