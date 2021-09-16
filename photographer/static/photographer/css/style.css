@@ -268,13 +268,6 @@ nav{
     align-items: center;  
     flex-wrap: wrap;   
 }
-#navbar{
-    display: flex;
-    flex-direction: row;      
-    padding: 0;
-    justify-content: center;
-    align-items: center;     
-}
 nav a{
     margin: 25px 14px;    
     text-decoration: none;
@@ -322,7 +315,8 @@ nav a{
 }
 .photo-column img{    
     margin: 3px 0;
-    
+    min-width: 1px;
+    width: 100% !important;    
 }
 
 #receiver{
