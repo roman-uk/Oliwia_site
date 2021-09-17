@@ -73,6 +73,9 @@ html, html a {
     margin-top: 0;     
     text-align: left;    
 }
+#btn {
+    display: none;
+}
 
 
 /*       C           */
@@ -347,16 +350,24 @@ nav a{
 
     }
     .item-a{
-        background: white;
-        border-radius: 5%;
-        margin: 1px;
-        border: 1px solid grey;
+        background: white;               
+        margin: 2% auto;
+        text-align: center;
     }
     .face-inst{
         width: 21em;
     }
     footer{
         width: 21em;
+    }
+    #navbar{
+        display: none;
+    }
+    #btn {
+        padding-right: 10%;
+        padding-left: 10%;
+        display: block;
+        margin: auto;
     }
 
 }
