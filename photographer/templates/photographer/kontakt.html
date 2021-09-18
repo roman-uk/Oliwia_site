@@ -166,21 +166,23 @@
 
 	<!--contact FORM -->
 	</h3> 
-	<form method='post' action="{% url 'contactURL'%}">
-		{% csrf_token %}
-		<div id="contact-data">
-			<span class='contact-name'>{{client_form.name}}</span>	
-			<span class="contact-email">{{client_form.email}}</span>
-		</div>
-		
-		<div>
-			<span class="contact-subject">{{client_form.subject}}</span>
-		</div>			
-		<div style="margin: 20px">		
-			<span>{{client_form.message}}</span>		
-		</div>
-			<input id="contact-submit" type="submit" value="wyślij">
-	</form>
+	<div class="contact-form">
+		<form method='post' action="{% url 'contactURL'%}">
+			{% csrf_token %}
+			<div class="contact-data">
+				<span class='contact-name'>{{client_form.name}}</span>	
+				<span class="contact-email">{{client_form.email}}</span>
+			</div>
+			
+			<div class="contact-subject">
+				<span>{{client_form.subject}}</span>
+			</div>			
+			<div class="contact-message">		
+				<span>{{client_form.message}}</span>		
+			</div>
+				<input class="contact-submit" type="submit" value="Wyszlij">
+		</form>
+	</div>
 	<!-- end form -->
 
 <!-- ------End Contact Me Form -->

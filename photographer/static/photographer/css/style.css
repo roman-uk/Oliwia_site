@@ -87,30 +87,43 @@ html, html a {
   text-align: right;
   margin: 0 2%;
 }
-#contact-data{
-    height: 25px;
-    margin: 30px 0px 20px 0px;
+.contact-form{
+    width: 50%;
+    display: flex;
+    flex-direction: column; 
+    flex-wrap: wrap;
+    justify-content: space-between;    
+    margin: auto;    
+}
+.contact-data{    
+    justify-content: space-between;
 }
 .contact-name{
     font-size: 18px;    
     height: 25px;
-    width: 265px;
-    margin: 0 5px;
+    width: 47%;
+    margin: 2px auto;
 }
 .contact-email{
     font-size: 18px;     
     height: 25px;
-    width: 265px;
-    margin: 0 5px;
+    width: 48%;
+    margin: 2px auto;
 }
 .contact-subject{
     font-size: 20px;     
-    width: 565px;
+    width: 98.7%;
+    margin: 2px auto;
 }
-#contact-submit{
-    width: 575px;
+.contact-message{
+    margin: 2px;
+
+}
+.contact-submit{
+    width: 99.5%;
     height: 30px;
     font-size: 18px;
+    margin: auto;
 }
 
 
@@ -318,41 +331,52 @@ nav a{
 }
 .photo-column img{    
     margin: 3px 0;
-    min-width: 1px;
-    width: 100% !important;    
+    min-width: 1px; /*for safari iphone*/
+    width: 100% !important; /*for safari iphone*/   
 }
-
 #receiver{
     width: 120%;    
     border: 3px solid black; 
     padding: 20px;
     border-radius: 5px;
 }
+textarea{ /* configuring the form window (messages)*/
+    width: 99%;
+    height: 21em;    
+}
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 700px) {
     .main-column{
-        width: 21em;
+        width: 100%;
     }
-    .photo-container{
+    #btn {
+        padding-right: 10%;
+        padding-left: 10%;
+        display: block;
+        margin: auto;
+    }      
+    .contact-form{
+        width: 99%;
+    } 
+    .contact-data{    
+        width: 100%;
         flex-direction: column;
+    } 
+    .contact-name{    
+    width: 97%;    
     }
-    #title{
-    letter-spacing: 1px;    
-    margin-bottom: 5px;
-    font-size: 1.3em;
+    .contact-email{    
+        width: 97%;        
+    }
+    .contact-subject{        
+        width: 99%;        
+    }
+    .contact-submit{
+        width: 99%;        
     }
     #enter{
         font-size: 1.3em;
         margin-left: 20%;
-    }
-    nav {
-        flex-wrap: wrap;
-
-    }
-    .item-a{
-        background: white;               
-        margin: 2% auto;
-        text-align: center;
     }
     .face-inst{
         width: 21em;
@@ -360,14 +384,26 @@ nav a{
     footer{
         width: 21em;
     }
+    .photo-container{
+        flex-direction: column;
+    }
+    .photo-column{
+        width: 99%;
+    }
+    #title{
+    letter-spacing: 1px;    
+    margin-bottom: 5px;
+    font-size: 1.3em;
+    }  
+    .item-a{
+        background: white;               
+        margin: 2% auto;
+        text-align: center;
+    }  
+    nav {
+        flex-wrap: wrap;
+    }    
     #navbar{
         display: none;
     }
-    #btn {
-        padding-right: 10%;
-        padding-left: 10%;
-        display: block;
-        margin: auto;
-    }
-
 }
