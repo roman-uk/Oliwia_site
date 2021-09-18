@@ -375,10 +375,10 @@ textarea{ /* configuring the form window (messages)*/
         margin-left: 20%;
     }
     .face-inst{
-        width: 21em;
+        width: 100%;
     }
     footer{
-        width: 21em;
+        width: 100%;
     }
     .photo-container{
         flex-direction: column;
