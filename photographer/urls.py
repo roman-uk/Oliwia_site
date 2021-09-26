@@ -11,6 +11,7 @@ urlpatterns = [
 	path('reusable/edit_photo', views.edit_photo, name='edit_photo_page'),
 	path('reusable/delete_photo', views.delete_photo, name='delete_photo_page'),
 	path('blog', views.blog, name='blogURL'),
+	path('blog/item', views.blog_item, name='blog_itemUrl'),
 	path('blog/add-article', views.add_article, name='add_articleURL'),
 	path('blog/edit-article', views.edit_article, name='edit_articleURL'),
 	path('blog/expand-article', views.expand_article, name='expand_articleURL'),

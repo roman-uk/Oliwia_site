@@ -58,18 +58,25 @@ class FirstArticleForm(forms.ModelForm):
 
 
 			# blog
-class ArticleTitleForm(forms.ModelForm):
+class ArticleTitleForm(forms.ModelForm):	
 	class Meta:
 		model = ArticleTitle
-		fields = '__all__'
+		fields = '__all__'		
+		widgets = {
+			'title_photo': FileInput(),
+		}
+		
 
 
 class ArticleBodyForm(forms.ModelForm):
+	# art_photo = forms.FileField(widget=FileInput())	
 	class Meta:
 		model = ArticleBody
-		fields = '__all__'		
+		fields = '__all__'	
+
 		widgets = {
             'art_text': forms.Textarea(attrs={'cols': 80, 'rows': 15}),
+            'art_photo': FileInput(),
         }
 
 

@@ -155,11 +155,17 @@ def delete_photo(request):
 # >>>>>>>>>>>>>>>>> BLOG PAGE <<<<<<<<<<<<<<<<<
 def blog(request):
 	first_article = FirstArticle.objects.all()	
-	art_titles = ArticleTitle.objects.order_by('-id')
-	art_body = ArticleBody.objects.all()
-	
-	context = {"first_article": first_article, 'art_titles': art_titles, 'art_body': art_body}
+	art_titles = ArticleTitle.objects.order_by('-id')	
+	context = {"first_article": first_article, 'art_titles': art_titles}
 	return render(request, 'photographer/blog.html', context)
+
+
+def blog_item(request):
+	pk = request.GET.get('pk')
+	title = ArticleTitle.objects.get(id=pk)	
+	article = ArticleBody.objects.filter(art_title=pk)
+	context = {'article': article, 'title': title}	
+	return render(request, 'photographer/blog-item.html', context)
 
 
 # creating or editing an article that is attached to the top of the page
@@ -212,18 +218,24 @@ def add_article(request):
 		return render (request, 'photographer/blog-add.html', context)
 # 	--returning the form for adding an article
 	elif request.method == "POST":		
-		title = ArticleTitleForm(request.POST)	#	-- saving the article title	
+		title = ArticleTitleForm(request.POST, request.FILES)	#	-- saving the article title	
 		title.save()
 		title = title.cleaned_data
 		title = title['art_title']	#  == title['art_title'].value()
 		title = ArticleTitle.objects.get(art_title=title)			
 		article = AddBodyForm(request.POST, request.FILES)#	--the article body without title. title=blank.
-		article.save()		 #	saving the article body
-		article = article.cleaned_data
-		article = article['art_text']		
-		article = ArticleBody.objects.get(art_text=article)
-		article.art_title = title	# --replacing blank article title with the one entered by the user.			
-		article.save(update_fields=['art_title'])	#	overwrite only "art_titlt"  field
+		art_text = article['art_text'].value()
+		art_photo = article['art_photo'].value()
+		if art_text != '':
+			article.save() #	--the article body without title. title=blank.
+			article = ArticleBody.objects.get(art_text=art_text)
+			article.art_title = title	# --replacing blank article title with the one entered by the user.			
+			article.save(update_fields=['art_title']) #	overwrite only "art_titlt"  field
+		elif art_photo != None:
+			article.save() #	--the article body without title. title=blank.
+			article = ArticleBody.objects.get(art_photo=article['art_photo'])
+			article.art_title = title	# --replacing blank article title with the one entered by the user.			
+			article.save(update_fields=['art_title']) #	overwrite only "art_titlt"  field
 		return redirect('blogURL')
 
 
@@ -231,13 +243,15 @@ def add_article(request):
 	# this function uses the same template as "expand_article"
 @login_required(login_url=reverse_lazy('loginURL')) # Verifying user authorization
 def edit_article(request):	
-	pk= request.GET.get('pk', '') # id 
+	pk= request.GET.get('pk', '') # id 	
 	field = request.GET.get('field')   # the field that will change (title or image or text)	
 	if request.method == 'GET':
-		help_text = 'Edytuj wpis na stronie blog '
+		help_text = 'Edytuj wpis na wkładce BLOG '
 		if field == 'title':
 			title = ArticleTitle.objects.get(id=pk)
-			title_form = ArticleTitleForm(initial={'art_title': title.art_title})			
+			title_form = ArticleTitleForm(initial={'art_title': title.art_title,
+				'title_font': title.title_font, 'title_photo': title.title_photo,
+				'piece_text': title.piece_text})			
 			context = {'help_text': help_text, 'title_form':title_form, 
 				'field': field, 'pk': pk, 'edit_or_expand':'edit_articleURL'}		
 		elif field != 'title':			
@@ -250,7 +264,7 @@ def edit_article(request):
 	elif request.method == "POST":
 		if field == 'title':
 			old_title = ArticleTitle.objects.get(id=pk)
-			title = ArticleTitleForm(request.POST, instance=old_title)
+			title = ArticleTitleForm(request.POST, request.FILES, instance=old_title)
 			title.save()
 		elif field != 'title':
 			old_body = ArticleBody.objects.get(id=pk)

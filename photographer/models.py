@@ -84,17 +84,39 @@ class FirstArticle(models.Model):
 		return im
 
 
-class ArticleTitle(models.Model):
+class ArticleTitle(models.Model):	
 	art_title = models.CharField(max_length=50, unique=True)
+	title_font = models.CharField(max_length=5, blank=True)
+	title_photo = models.ImageField(upload_to='blog_photo', blank=True)
+	piece_text = models.TextField(blank=True)
+
 
 	def __str__(self):
 		return self.art_title
 
+	# Overriding the save method so that when an image is deleted or updated,
+    #           the old image is deleted from the storage
+	def save(self, *args, **kwargs):
+		if self.pk:
+			old_record = ArticleTitle.objects.get(pk=self.pk)
+			if old_record.title_photo != self.title_photo:
+				old_record.title_photo.delete(save=False)
+		super(ArticleTitle, self).save(*args, **kwargs)
+
+	# adding an imageURL method to exclude an error if the image is missing
+	@property
+	def imageUrl(self):
+		try:
+			im = self.title_photo.url
+		except:
+			im = ''
+		return im
+
 
 class ArticleBody(models.Model):
 	art_title = models.ForeignKey(ArticleTitle, on_delete=models.CASCADE, null=True, blank=True)
-	art_photo = models.ImageField(upload_to='blog_photo', null=True, blank=True)
-	art_text = models.TextField(null=True, blank=True)	
+	art_photo = models.ImageField(upload_to='blog_photo', blank=True)
+	art_text = models.TextField(blank=True)	
 
 	def __str__(self):
 		name = str(self.art_title) + " " + str(self.id)

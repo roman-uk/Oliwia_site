@@ -16,7 +16,7 @@
 		/*<!-- facebok and intagramm links in bottom page -->*/
 		.face-inst{display: none;}
 		/*		all fields are invisible*/
-		tr {display: none;}
+		.title, .image, .text, .name {display: none;}
 		/*I pass the class name so that the required field becomes visible*/
 		.{{field}}{display: block;} 
 	</style>
@@ -35,12 +35,26 @@
 		<form enctype="multipart/form-data" method="POST" action="{% url edit_or_expand %}?tab={{navbar_active}}&full_name={{full_name}}&pk={{pk}}&field={{field}}">
 		{% csrf_token %}
 
-		<table class="description">
-			<tr class="title"> 		<!-- this field is only used by the 'edit_article' -->
+		<table class="description title">
+			<tr> 		<!-- these fields is only used by the 'edit_article' -->
 				<td><h3>Nazwa artykłu</h3></td>
 				<td>{{title_form.art_title}}</td>
 			</tr>
-			<tr> 	<!-- this field is invisible all the time. this is only used by the 'expand_article' -->
+			<tr> 
+				<td><h3>Wielkość czcionki<p>od h1 do h6</p></h3></td>
+				<td>{{title_form.title_font}}</td>				
+			</tr>
+			<tr> 
+				<td><h3>Foto do skróta</h3></td>
+				<td>{{title_form.title_photo}}</td>
+			</tr>
+			<tr> 
+				<td><h3>Text skróta</h3></td>
+				<td>{{title_form.piece_text}}</td>
+			</tr>
+		</table>
+		<table class="description">
+			<tr class='name'> 	<!-- this field is invisible all the time. this is only used by the 'expand_article' -->
 				<td><h3>Nazwa artykłu</h3></td>
 				<td>{{body_form.art_title}}</td>
 			</tr>

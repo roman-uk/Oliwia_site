@@ -1,0 +1,102 @@
+{% extends "./index.html" %}
+
+{% load static %}
+
+
+
+{% block content %}
+
+<body>
+	<style type="text/css">
+		.drop-plus{background: #F8F9F9;}
+		#blog {
+			font-weight: bold;
+    		font-size: 20px;
+    		margin: 25px 33px;
+		}
+	</style>
+	
+<div class="main-column">
+		
+		<h2>Blog</h2>		
+
+	
+
+	<div class="blog-record">	
+			<!--** Title article **-->
+		<div class="blog-record-title">
+			<span>{{title.art_title}}</span>				
+				<!--##### DROP DOWN MENU edit and delit title ####-->
+				{% if user.is_authenticated %}
+					<div class="dropdown">
+			            <h4 style="margin: 0;" class="drop-plus"><b> &#128397;&#65039;</b></h4>
+			            <div class="dropdown-content drop-menu">
+			            	 <a href="{% url 'expand_articleURL' %}?pk={{title.id}}&field=title">Poszerzyć</a>				            	
+			                <a href="{% url 'edit_articleURL' %}?pk={{title.id}}&field=title">Redagować</a>	                 
+			                <a href="{% url 'delete_articleURL' %}?pk={{title.id}}" onclick="return confirm('Usunąć cały artykuł:  <<{{title.art_title}}>>?');">Usunąć</a>
+			            </div>
+			        </div>
+			    {% endif %}
+			    <!--###### END drop down menu ########-->
+		</div> 
+		<!--*** end title ***-->
+
+
+				<!-- image and text in article -->					
+				{% for item in article %}
+							
+		<div class="blog-body">
+					
+							<!-- IMAGE -->
+<!--image>>--> 		 <img src="{{item.imageUrl}}">
+
+							<!--##### DROP DOWN MENU edit and delit "IMAGE" ####-->
+							{% if user.is_authenticated %}
+					<div class="dropdown" style="left: 20%; position: absolute;">
+			            <h4 style="margin: 2%;" class="drop-plus">
+			            	{% if item.art_photo != '' %}<!-- do not display the edit icon if the image is missing -->
+			            	<b>&#128397;&#65039;</b>
+			            	{% endif %}
+			            </h4>
+			            <div class="dropdown-content drop-menu">			            	
+			                <a href="{% url 'edit_articleURL' %}?pk={{item.id}}&field=image">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?pk={{item.id}}&field=image" onclick="return confirm('Usunąć {{item.art_photo.name}}?');">Usunąć</a>
+			            </div>
+			        </div>
+			        		{% endif %}
+			    		<!--###### END drop down menu "IMAGE" ########-->
+
+			    		<!-- TEXT -->
+				<div class="blog-text">
+					<h4 style="margin: 3px">
+
+						<!--##### DROP DOWN MENU edit and delit "TEXT" ####-->
+						{% if user.is_authenticated %}
+					<div class="dropdown">
+				            <h4 style="margin: 0;" class="drop-plus">
+				            	{% if item.art_text != '' %}
+				            	<b> &#128397;&#65039;</b>
+				            	{% endif %}
+				            </h4>
+			            <div class="dropdown-content drop-menu">	            	
+			                <a href="{% url 'edit_articleURL' %}?pk={{item.id}}&field=text">Redagować</a>	                 
+			                <a href="{% url 'del_part_articleURL' %}?pk={{item.id}}&field=text" onclick="return confirm('Usunąć ten blok tekstu?');">Usunąć</a>
+			            </div>
+			        </div>
+			        {% endif %}
+			    <!--###### END drop down menu "TEXT" ########-->
+
+<!--text>>>-->		{{item.art_text}}
+					
+					</h4>
+				</div>
+
+		</div>
+					
+				{% endfor %}				
+	
+	</div>	
+		<!-- ------------------------------ -->
+</div>
+</body>
+{% endblock %}
